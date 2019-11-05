@@ -5,6 +5,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(96, 96, 96);
+  background: url('./images/wallpaper_black-grey-gradient-linear-3200x1800-c2-000000-808080-a-135-f-14.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  /* background-position: 50%; */
+  color: white !important;
 }
 
 code {

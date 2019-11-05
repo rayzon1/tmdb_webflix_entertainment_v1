@@ -1,0 +1,125 @@
+.content {
+  display: flex;
+  flex-direction: row;
+  height: 62vh;
+  width: 92%;
+  justify-content: center;
+  margin-left: 8%;
+}
+
+.hideContent {
+  display: none;
+}
+
+.reviewContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 25px;
+}
+
+.summary {
+  color: white;    
+  font-size: 22px;
+  text-shadow: 2px 2px 4px #000000;
+  max-width: 62%;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentContainer {
+  width: 100%;
+  text-align: justify;
+  margin-bottom: 45px;
+}
+
+.imdb_logo {
+  width: 3%; 
+  border-radius: 25px;
+}
+
+.rotten_logo {
+  width: 4%; 
+}
+
+.metacritic_logo {
+  width: 3%; 
+}
+
+.posterImage {
+  max-width: 68%;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 26px 23px 64px rgba(0, 0, 0, 1);
+  margin-bottom: 35px;
+}
+
+.posterContainer {
+  width: auto;
+}
+
+.productionLogo {
+  width: 8%; 
+  margin-left: 20px;
+  margin-bottom: 40px;
+}
+
+.reviewLogoContainer {
+  text-align: left;
+  margin-top: 2%;
+}
+
+
+.productionLogoContainer {
+  text-align: left;
+  margin-top: 8%;
+}
+
+@media only screen and (max-width: 790px) {
+
+  .reviewContainer {
+    display: inline-block;
+    margin: 0;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-left: 0;
+  }
+
+  .contentContainer {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+
+  .imdb_logo {
+    width: 6%; 
+    border-radius: 25px;
+  }
+
+  .rotten_logo {
+    width: 8%; 
+    margin-left: 15px; 
+  }
+
+  .metacritic_logo {
+    width: 5%; 
+    margin-left: 15px; 
+  }
+
+  .productionLogo {
+    display: none;
+  }
+
+  .productionLogoContainer {
+    position: inherit;
+  }
+
+  .summary {
+    max-width: 100%;
+  }
+  
+}

@@ -1,0 +1,31 @@
+.paperContainer {
+    width: 100%;
+    height: 15vh;
+    background-color: black;
+    /* color: white; */
+    position: relative;
+}
+
+.title {
+    position: absolute; 
+    bottom: 0; 
+    margin-left: 10px; 
+}
+
+.image {
+    width: 8vw; 
+    height: 10vh; 
+    position: absolute; 
+    margin-top: 2rem; 
+    right: 15px;
+}
+
+@media only screen and (max-width: 800px) {
+
+    .image {
+        width: 12vh;
+        height: 10vh;
+        margin-top: 1.5rem;
+        right: 13px;
+    }
+}

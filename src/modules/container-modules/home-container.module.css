@@ -1,0 +1,110 @@
+
+.mainTitle {
+    margin-top: 3vh; 
+    text-shadow: 2px 2px 4px #000000; 
+    font-family: 'Teko', sans-serif; 
+    font-size: 75px; 
+    letter-spacing: 8px;
+    
+}
+
+.topRatedTitle {
+    color: white; 
+    text-align: left; 
+    font-size: 30px; 
+    margin-top: 50px; 
+    letter-spacing: 4px;
+    font-family: 'Teko', sans-serif;
+}
+
+.topMovieContainer {
+    margin-top: 5rem; 
+    display: flex; 
+    justify-content: center;
+}
+
+.topTvContainer {
+    margin-top: 1rem; 
+    display: flex; 
+    justify-content: center;
+}
+
+.topMovieTitle {
+    letter-spacing: 8px;
+    font-family: 'Teko', sans-serif;
+    margin-right: 1rem;
+    font-size: 52px;
+    /* margin-bottom: 0px !important; */
+}
+
+.topTvTitle {
+    letter-spacing: 8px;
+    font-family: 'Teko', sans-serif;
+    margin-right: 1rem;
+    font-size: 52px;
+    margin-bottom: 18px !important;
+}
+
+.filmReelLogo {
+    height: 20%;
+    width: 6%;
+}
+
+.tvIconLogo {
+    height: 20%;
+    width: 8%;
+}
+
+.title {
+    color: white; 
+    text-align: left; 
+    font-size: 30px;
+    letter-spacing: 4px;
+    font-family: 'Teko', sans-serif;
+}
+
+@media only screen and (max-width: 790px) {
+
+    .mainTitle {
+        font-size: 48px;
+    }
+
+    .filmReelLogo {
+        width: 18%; 
+        height: 20%;
+    }
+
+    .tvIconLogo {
+        width: 24%; 
+        height: 20%;
+    }
+
+    .topRatedTitle {
+        color: white; 
+        text-align: left; 
+        font-size: 42px; 
+        margin-top: 50px; 
+        font-family: 'Teko', sans-serif;
+    }
+
+    .topTvTitle {
+        
+        margin-bottom: 9px !important;
+    }
+
+    .topTvContainer {
+        margin-top: 0rem; 
+    }
+    
+    .title {
+        color: white; 
+        text-align: left; 
+        font-size: 42px;
+        font-family: 'Teko', sans-serif;
+    }
+
+    .topMovieTitle {
+        font-size: 47px;
+        margin-bottom: 4px !important;
+    }
+}
