@@ -1,4 +1,4 @@
-import * as PosterClickActionTypes from "../actiontypes/PosterClickActionTypes";
+import * as PosterClickActionTypes from '../actionTypes/PosterClickActionTypes';
 
 // actions for poster click, function for each type: popular, top rated, etc.
 // actions will update the specific state for index and click.

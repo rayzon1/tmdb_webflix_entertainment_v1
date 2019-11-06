@@ -6,6 +6,8 @@ import SimpleModal from "./Modal";
 
 export default function PosterSlider({
   videoData,
+  getPosterStatus,
+  category,
 }) {
   //! Map urls and combine to path to gather poster backdrops.
   //! https://image.tmdb.org/t/p/w500
@@ -60,9 +62,9 @@ export default function PosterSlider({
         <div
           className={styles.tile}
           key={index}
-          // onClick={() => {
-          //   getPosterStatus(index, category);
-          // }}
+          onClick={() => {
+            getPosterStatus(index, category);
+          }}
         >
           <div className={styles.tile__media}>
             <img
