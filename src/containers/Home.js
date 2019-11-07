@@ -10,24 +10,16 @@ import {
   setTvClickedFalse
 } from "../actions/PosterClickActions";
 import axios from "axios";
-import { movieUrls } from "../exports/apiFetchFunctions";
+import { movieUrls, imdbUrls, createMovieContentDetails } from "../exports/apiFetchFunctions";
+
+
 
 export default function Home({ posterSliderInformation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [movieDetails, setMovieDetails] = useState([]);
+  const [movieReviews, setMovieReviews] = useState([]);
 
   const dispatch = useDispatch();
-
-  const createMovieContentDetails = (obj, func) => {
-    const detailObj = [];
-    obj.data.results.forEach((data, index) => {
-      const details = axios.get(movieUrls(data.id, "movie"));
-      details.then(data => {
-        detailObj.push(data);
-      });
-    });
-    func(prev => [...prev, detailObj]);
-  };
 
   const clickPosterState = useSelector(
     state => state.posterClickState.clickState
@@ -80,12 +72,20 @@ export default function Home({ posterSliderInformation }) {
         createMovieContentDetails(posterSliderInformation[0], setMovieDetails),
         createMovieContentDetails(posterSliderInformation[1], setMovieDetails),
         createMovieContentDetails(posterSliderInformation[2], setMovieDetails),
-      ]);
+      ])
   }, [posterSliderInformation]);
 
+
+  // useEffect(() => {
+  //   posterSliderInformation.length === 3
+  // }, [posterSliderInformation])
+
+
   useEffect(() => {
-    movieDetails.length > 0 && console.log(movieDetails);
-  }, [movieDetails]);
+    posterSliderInformation.length === 3 && 
+    console.log(posterSliderInformation);
+  }, [posterSliderInformation.length === 3 ]);
+
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>

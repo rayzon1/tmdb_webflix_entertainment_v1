@@ -8,6 +8,7 @@ import MovieSearch from './containers/MovieSearch';
 import "./App.css";
 import { movieUrls, createPosterSliderInformation } from './exports/apiFetchFunctions';
 import { HashRouter, Route, Switch } from "react-router-dom";
+import axios from 'axios';
 
 
 
@@ -42,6 +43,7 @@ function App() {
     createPosterSliderInformation(movieUrls('now_playing', 'movie'), setPosterSliderInformation);
   
   }, [])
+
 
   useEffect(() => {
     posterSliderInformation.length !== 0 &&
