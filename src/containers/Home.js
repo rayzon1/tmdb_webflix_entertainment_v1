@@ -15,7 +15,7 @@ import { movieUrls, imdbUrls, createMovieContentDetails } from "../exports/apiFe
 
 
 export default function Home({ posterSliderInformation }) {
-  const [isLoading, setIsLoading] = useState(false);
+
   const [movieDetails, setMovieDetails] = useState([]);
   const [movieReviews, setMovieReviews] = useState([]);
 
@@ -66,24 +66,10 @@ export default function Home({ posterSliderInformation }) {
     });
   }, []);
 
-  useEffect(() => {
-    posterSliderInformation.length === 3 &&
-      Promise.all([
-        createMovieContentDetails(posterSliderInformation[0], setMovieDetails),
-        createMovieContentDetails(posterSliderInformation[1], setMovieDetails),
-        createMovieContentDetails(posterSliderInformation[2], setMovieDetails),
-      ])
-  }, [posterSliderInformation]);
-
-
-  // useEffect(() => {
-  //   posterSliderInformation.length === 3
-  // }, [posterSliderInformation])
-
 
   useEffect(() => {
     posterSliderInformation.length === 3 && 
-    console.log(posterSliderInformation);
+    console.log( posterSliderInformation);
   }, [posterSliderInformation.length === 3 ]);
 
 
