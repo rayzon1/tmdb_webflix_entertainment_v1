@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { authToken, apiKey } from '../config';
-import { tsIndexedAccessType } from '@babel/types';
 
 // Main endpoint for movie information.
 //TODO: Create function to gather movie ids from data object then get movieDetails from API.
@@ -40,10 +39,28 @@ export const createPosterSliderInformation = (endpoint, func) => {
           func(prev => [...prev, posterSlider]);
         }
       } catch (error) {
-        console.log("There was an error", error);
+        console.error("Error", error);
       }
     });
   };
 
-
+// take in index of poster clicked 
+// compare clicked index to index of url in posterSliderInformation object
+// run url through axios to obtain details/ reviews.
+export const createContentDetails = (arr, clickIndex, func) => {
+  const contentContainer = {};
+  arr.forEach(async(data, index) => {
+    if(index === clickIndex) {
+      try { 
+        const details = await axios.get(data);
+        const imdb = await axios.get(imdbUrls(details.data.imdb_id));
+        contentContainer.details = details;
+        contentContainer.imdb = imdb;
+        func(contentContainer);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  });
+}
   

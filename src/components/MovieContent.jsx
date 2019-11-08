@@ -5,14 +5,14 @@ import metacritic from "../images/icons/metacritic.png";
 import rt from "../images/icons/rt.png";
 
 export default function MovieContent({
-  data,
-  posterStatus,
-  details,
-  imdbInformation,
+  // data, 
+  posterStatus, // redux clickstate 
+  details, // detail object information from API. This contains the movie title/overview etc.
+  imdbInformation, // returned imdb object from OMDb API. This contains ratings array plus details.
 }) {
 
   // Poster index from Redux state
-  const posterIndex = posterStatus.index;
+  // const posterIndex = posterStatus.index;
 
   // Logo icons.
   const reviewLogos = {
@@ -24,8 +24,8 @@ export default function MovieContent({
   const createReview = () => {
     return (
       imdbInformation &&
-      imdbInformation[posterIndex].Ratings != undefined &&
-      imdbInformation[posterIndex].Ratings.map(data => {
+      imdbInformation.Ratings != undefined &&
+      imdbInformation.Ratings.map(data => {
         if (data.Source.includes("Internet")) {
           return (
             <span className={styles.reviewLogoContainer}>
@@ -67,15 +67,15 @@ export default function MovieContent({
       <div className={posterStatus.clicked ? styles.content : styles.hideContent}>
         <div className={styles.summary}>
           <div className={styles.contentContainer}>
-            {data && data.results[posterIndex].overview }
+            {details && details.overview }
           </div>
           <div className={styles.reviewContainer}>
             {createReview()}
           </div>
           <div className={styles.productionLogoContainer}>
             {details &&
-              details[posterIndex].production_companies !== undefined &&
-              details[posterIndex].production_companies.map(
+              details.production_companies !== undefined &&
+              details.production_companies.map(
                 data =>
                   data !== undefined && 
                   data.logo_path !== null && ( 
@@ -89,13 +89,11 @@ export default function MovieContent({
           </div>
         </div>
 
-        
-
-        {data && (
+        {details && (
           <div className={styles.posterContainer}>
             <img
               src={`https://image.tmdb.org/t/p/w500${
-                data.results[posterIndex].poster_path
+                details.poster_path
               }`}
               className={styles.posterImage}
               alt="poster-images"

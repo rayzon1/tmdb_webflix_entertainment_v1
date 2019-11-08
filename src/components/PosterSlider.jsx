@@ -63,7 +63,7 @@ export default function PosterSlider({
           className={styles.tile}
           key={index}
           onClick={() => {
-            getPosterStatus(index, category);
+              getPosterStatus(index, category);
           }}
         >
           <div className={styles.tile__media}>
