@@ -1,2 +1,3 @@
-export const authToken = '6d1e723cd6edce1af3e8bf19b4ce51db';
-export const apiKey = 'ba2a0c60';
+export const authToken = `${process.env.REACT_APP_AUTHTOKEN}`;
+export const apiKey = `${process.env.REACT_APP_APIKEY}`;
+export const newsApiKey = `${process.env.REACT_APP_NEWS_APIKEY}`;
