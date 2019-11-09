@@ -12,7 +12,7 @@ export const movieReviewsUrl = (data, category) => {
 }
 
 export const imdbUrls = data => {
-  return `http://www.omdbapi.com/?apikey=${apiKey}&i=${data}`
+  return `https://www.omdbapi.com/?apikey=${apiKey}&i=${data}`
 }
 
 
