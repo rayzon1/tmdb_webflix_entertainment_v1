@@ -3,34 +3,34 @@ import * as PosterClickActionTypes from "../actionTypes/PosterClickActionTypes";
 const initialState = {
   clickState: {
     topRated: {
-      index: 0,
+      index: null,
       clicked: false
     },
     popular: {
-      index: 0,
+      index: null,
       clicked: false
     },
     upcoming: {
-      index: 0,
+      index: null,
       clicked: false
     },
     nowPlaying: {
-      index: 0,
+      index: null,
       clicked: false
     }
   },
 
   tvClickState: {
     topRated: {
-      index: 0,
+      index: null,
       clicked: false
     },
     popular: {
-      index: 0,
+      index: null,
       clicked: false
     },
     airing: {
-      index: 0,
+      index: null,
       clicked: false
     }
   }

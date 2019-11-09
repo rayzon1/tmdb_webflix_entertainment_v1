@@ -48,16 +48,14 @@ export default function Home({ posterSliderInformation }) {
     [dispatch]
   );
 
-  /**
-   * Will map through categories and
-   */
+ // Function to map through 
   const setClickFalse = useCallback(
     arr => {
       return arr.map(cat => {
         return dispatch(setClickedFalse(cat));
       });
     },
-    [dispatch]
+    [setClickedFalse]
   );
 
   //! set tv click false.
@@ -68,7 +66,7 @@ export default function Home({ posterSliderInformation }) {
   }, []);
 
   
-
+  //TODO: CREATE OWN COMPONENT AND PASS ARGUMENTS AS PROPS.
   const createPosterSliderComponent = (title, data, status, category) => {
     return (
       <>
@@ -110,6 +108,7 @@ export default function Home({ posterSliderInformation }) {
       );
   }
 
+  // This will take in the category 
   const effects = (cat, cat2) => {
     if (cat.clicked) {
       setClickFalse(cat2);
@@ -141,18 +140,26 @@ export default function Home({ posterSliderInformation }) {
   }, [clickPosterState.nowPlaying.clicked]);
 
 
+  // Dependencies for poster click effects.
+  // Will only run if the poster click index or clicked bool changes. 
+  const checkState = cat => {    
+    return clickPosterState[cat].index ||
+    clickPosterState[cat].clicked
+  }
+
+
 
   useEffect(() => {    
     mapCreateContentDetails(arr[0].index, arr[0].category);
-  }, [clickPosterState.topRated.index || clickPosterState.topRated.clicked]);
+  }, [checkState('topRated')]);
 
   useEffect(() => {
     mapCreateContentDetails(arr[1].index, arr[1].category);
-  }, [clickPosterState.popular.index || clickPosterState.popular.clicked]);
+  }, [checkState('popular')]);
 
   useEffect(() => {
     mapCreateContentDetails(arr[2].index, arr[2].category);
-  }, [clickPosterState.nowPlaying.index || clickPosterState.nowPlaying.clicked]);
+  }, [checkState('nowPlaying')]);
 
   // useEffect(() => {
   //   posterSliderInformation.length === 3 &&
