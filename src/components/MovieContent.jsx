@@ -3,6 +3,7 @@ import styles from "../modules/component-modules/moviecontent-comp.module.css";
 import imdb_logo from "../images/icons/imdb_logo.png";
 import metacritic from "../images/icons/metacritic.png";
 import rt from "../images/icons/rt.png";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function MovieContent({
   // data, 
@@ -67,14 +68,14 @@ export default function MovieContent({
       <div className={posterStatus.clicked ? styles.content : styles.hideContent}>
         <div className={styles.summary}>
           <div className={styles.contentContainer}>
-            {details && details.overview }
+            {details ? details.overview : <LoadingSpinner /> }
           </div>
           <div className={styles.reviewContainer}>
             {createReview()}
           </div>
           <div className={styles.productionLogoContainer}>
             {details &&
-              details.production_companies !== undefined &&
+              details.production_companies !== undefined ?
               details.production_companies.map(
                 data =>
                   data !== undefined && 
@@ -85,7 +86,8 @@ export default function MovieContent({
                         alt="production-logo"
                       />
                   )
-              )}
+              ) : <LoadingSpinner/>
+              }
           </div>
         </div>
 

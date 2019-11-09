@@ -47,7 +47,7 @@ export const createPosterSliderInformation = (endpoint, func) => {
 // take in index of poster clicked 
 // compare clicked index to index of url in posterSliderInformation object
 // run url through axios to obtain details/ reviews.
-export const createContentDetails = (arr, clickIndex, func) => {
+export const createContentDetails = (arr, func, clickIndex) => {
   const contentContainer = {};
   arr.forEach(async(data, index) => {
     if(index === clickIndex) {
@@ -56,6 +56,7 @@ export const createContentDetails = (arr, clickIndex, func) => {
         const imdb = await axios.get(imdbUrls(details.data.imdb_id));
         contentContainer.details = details;
         contentContainer.imdb = imdb;
+        func(null);
         func(contentContainer);
       } catch (error) {
         console.error('Error:', error);

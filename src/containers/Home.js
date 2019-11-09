@@ -17,8 +17,6 @@ import {
 } from "../exports/apiFetchFunctions";
 
 export default function Home({ posterSliderInformation }) {
-  // const [movieDetails, setMovieDetails] = useState([]);
-  // const [movieReviews, setMovieReviews] = useState([]);
   const [contentState, setContentState] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -69,6 +67,8 @@ export default function Home({ posterSliderInformation }) {
     });
   }, []);
 
+  
+
   const createPosterSliderComponent = (title, data, status, category) => {
     return (
       <>
@@ -88,43 +88,82 @@ export default function Home({ posterSliderInformation }) {
     );
   };
 
-  useEffect(() => {
+  const category = {
+    topRated: ["popular", "upcoming", "nowPlaying"],
+    popular: ["upcoming", "topRated", "nowPlaying"],
+    upcoming: ["popular", "topRated", "nowPlaying"],
+    nowPlaying: ["topRated", "popular", "upcoming"]
+  };
+
+  const arr = [
+    {category: 'topRated', index: 0},
+    {category: 'popular', index: 1},
+    {category: 'nowPlaying', index: 2}
+  ]
+
+  const mapCreateContentDetails = (index, category) => {
     posterSliderInformation.length === 3 &&
       createContentDetails(
-        posterSliderInformation[0].details,
-        clickPosterState.topRated.index,
-        setContentState
+        posterSliderInformation[index].details,
+        setContentState,
+        clickPosterState[category].index
       );
-  }, [clickPosterState.topRated.index]);
+  }
+
+  const effects = (cat, cat2) => {
+    if (cat.clicked) {
+      setClickFalse(cat2);
+    }
+    return () => {
+      console.log("unmounted");
+    };
+  };
 
   useEffect(() => {
-    posterSliderInformation.length === 3 &&
-      createContentDetails(
-        posterSliderInformation[1].details,
-        clickPosterState.popular.index,
-        setContentState
-      );
-  }, [clickPosterState.popular.index]);
+    effects(clickPosterState.topRated, category.topRated);
+    return () => {
+      console.log('Poster-click state unmounted.')
+    }
+  }, [clickPosterState.topRated.clicked]);
 
   useEffect(() => {
-    posterSliderInformation.length === 3 &&
-      createContentDetails(
-        posterSliderInformation[2].details,
-        clickPosterState.nowPlaying.index,
-        setContentState
-      );
-  }, [clickPosterState.nowPlaying.index]);
+    effects(clickPosterState.popular, category.popular);
+    return () => {
+      console.log('Poster-click state unmounted.')
+    }
+  }, [clickPosterState.popular.clicked]);
 
   useEffect(() => {
-    posterSliderInformation.length === 3 &&
-      contentState !== null &&
-      console.log(contentState);
-  }, [clickPosterState.topRated.index]);
+    effects(clickPosterState.nowPlaying, category.nowPlaying);
+    return () => {
+      console.log('Poster-click state unmounted.')
+    }
+  }, [clickPosterState.nowPlaying.clicked]);
+
+
+
+  useEffect(() => {    
+    mapCreateContentDetails(arr[0].index, arr[0].category);
+  }, [clickPosterState.topRated.index || clickPosterState.topRated.clicked]);
 
   useEffect(() => {
-    posterSliderInformation.length === 3 &&
-      console.log(posterSliderInformation[0].details);
-  }, [posterSliderInformation.length === 3]);
+    mapCreateContentDetails(arr[1].index, arr[1].category);
+  }, [clickPosterState.popular.index || clickPosterState.popular.clicked]);
+
+  useEffect(() => {
+    mapCreateContentDetails(arr[2].index, arr[2].category);
+  }, [clickPosterState.nowPlaying.index || clickPosterState.nowPlaying.clicked]);
+
+  // useEffect(() => {
+  //   posterSliderInformation.length === 3 &&
+  //     contentState !== null &&
+  //     console.log(contentState);
+  // }, [clickPosterState.topRated.index]);
+
+  // useEffect(() => {
+  //   posterSliderInformation.length === 3 &&
+  //     console.log(posterSliderInformation[0].details);
+  // }, [posterSliderInformation.length === 3]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
