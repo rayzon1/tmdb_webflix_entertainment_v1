@@ -54,9 +54,10 @@ export const createContentDetails = (arr, func, clickIndex) => {
       try { 
         const details = await axios.get(data);
         const imdb = await axios.get(imdbUrls(details.data.imdb_id));
+        
         contentContainer.details = details;
         contentContainer.imdb = imdb;
-        func(null);
+        
         func(contentContainer);
       } catch (error) {
         console.error('Error:', error);

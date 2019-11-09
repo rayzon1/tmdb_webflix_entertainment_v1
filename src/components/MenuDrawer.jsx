@@ -16,7 +16,7 @@ import $ from "jquery";
 const useStyles = makeStyles({
   list: {
     width: $(window).width() > 790 ? 350 : 303,
-    backgroundColor: "#242424",
+    backgroundColor: "black",
     height: "100%",
     color: "white"
   },
@@ -67,14 +67,6 @@ function TemporaryDrawer({ state, setState, toggleDrawer, history }) {
         )}
       </List>
       <Divider />
-      {/* <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List> */}
     </div>
   );
 

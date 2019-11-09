@@ -156,7 +156,7 @@ export default function Home({ posterSliderInformation }) {
 
   // useEffect(() => {
   //   posterSliderInformation.length === 3 &&
-  //     contentState !== null &&
+  //     contentState  &&
   //     console.log(contentState);
   // }, [clickPosterState.topRated.index]);
 
@@ -176,32 +176,30 @@ export default function Home({ posterSliderInformation }) {
       )}
       <MovieContent
         posterStatus={clickPosterState.topRated}
-        imdbInformation={contentState !== null && contentState.imdb.data}
-        details={contentState !== null && contentState.details.data}
+        imdbInformation={contentState  && contentState.imdb.data}
+        details={contentState  && contentState.details.data}
       />
-      <PosterSlider
-        videoData={
-          posterSliderInformation.length === 3 && posterSliderInformation[1]
-        }
-        getPosterStatus={dispatchClickState}
-        category={"popular"}
-      />
+      {createPosterSliderComponent(
+        "Popular",
+        posterSliderInformation.length === 3 && posterSliderInformation[1],
+        dispatchClickState,
+        "popular"
+      )}
       <MovieContent
         posterStatus={clickPosterState.popular}
-        imdbInformation={contentState !== null && contentState.imdb.data}
-        details={contentState !== null && contentState.details.data}
+        imdbInformation={contentState  && contentState.imdb.data}
+        details={contentState  && contentState.details.data}
       />
-      <PosterSlider
-        videoData={
-          posterSliderInformation.length === 3 && posterSliderInformation[2]
-        }
-        getPosterStatus={dispatchClickState}
-        category={"nowPlaying"}
-      />
+      {createPosterSliderComponent(
+        "Now Playing",
+        posterSliderInformation.length === 3 && posterSliderInformation[2],
+        dispatchClickState,
+        "nowPlaying"
+      )}
       <MovieContent
         posterStatus={clickPosterState.nowPlaying}
-        imdbInformation={contentState !== null && contentState.imdb.data}
-        details={contentState !== null && contentState.details.data}
+        imdbInformation={contentState  && contentState.imdb.data}
+        details={contentState  && contentState.details.data}
       />
     </div>
   );
