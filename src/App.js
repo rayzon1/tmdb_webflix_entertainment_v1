@@ -15,6 +15,7 @@ import axios from 'axios';
 function App() {
 
   const [posterSliderInformation, setPosterSliderInformation] = useState([]);
+  const [tvPosterSliderInformation, setTvPosterSliderInformation ] = useState([]);
   
   const [state, setState] = React.useState({
     top: false,
@@ -38,17 +39,26 @@ function App() {
 
   useEffect(() => {
     
-    createPosterSliderInformation(movieUrls('top_rated', 'movie'), setPosterSliderInformation);
-    createPosterSliderInformation(movieUrls('popular', 'movie'), setPosterSliderInformation);
-    createPosterSliderInformation(movieUrls('now_playing', 'movie'), setPosterSliderInformation);
+    createPosterSliderInformation(movieUrls('top_rated', 'movie'), setPosterSliderInformation, 'movie');
+    createPosterSliderInformation(movieUrls('popular', 'movie'), setPosterSliderInformation, 'movie');
+    createPosterSliderInformation(movieUrls('now_playing', 'movie'), setPosterSliderInformation, 'movie');
   
   }, [])
 
-
   useEffect(() => {
-    posterSliderInformation.length !== 0 &&
-    console.log(posterSliderInformation);
-  }, [posterSliderInformation.length === 3])
+
+    createPosterSliderInformation(movieUrls('top_rated', 'tv'), setTvPosterSliderInformation, 'tv');
+    createPosterSliderInformation(movieUrls('popular', 'tv'), setTvPosterSliderInformation, 'tv');
+    createPosterSliderInformation(movieUrls('on_the_air', 'tv'), setTvPosterSliderInformation, 'tv');
+
+  }, [])
+
+
+  const effectDepend = tvPosterSliderInformation.length === 3;
+  useEffect(() => {
+    tvPosterSliderInformation.length !== 0 &&
+    console.log(tvPosterSliderInformation);
+  }, [effectDepend])
 
   
   return (
@@ -65,7 +75,7 @@ function App() {
             <Route
               exact
               path="/home"
-              render={() => <Home posterSliderInformation={posterSliderInformation}/>}
+              render={() => <Home posterSliderInformation={posterSliderInformation} tvPosterSliderInformation={tvPosterSliderInformation}/>}
             />
             <Route exact path="/moviesearch" render={() => <MovieSearch category={'movie'} />} />
             <Route exact path="/tvshowsearch" render={() => <MovieSearch category={'tv'} />} />

@@ -17,24 +17,24 @@ export const imdbUrls = data => {
 
 
 // Takes in main endpoint for category ex. top_rated, popular.
-export const createPosterSliderInformation = (endpoint, func) => {
+export const createPosterSliderInformation = (endpoint, func, category) => {
     let posterSlider = {};
     
     const mainData = axios.get(endpoint);
-    mainData.then( data => {
+    mainData.then( async data => {
       
       try {
         if (data.status === 429) {
           var d = new Date();
           throw new Error(`Too many requests ${d}`);
         } else {
-          const endData =  data.data;
-          const ids =  data.data.results.map(data => data.id);
-          const detailUrls =  ids.map(data => movieUrls(data, 'movie'));
+          const endData =  await data.data;
+          const ids =  await data.data.results.map(data => data.id);
+          const detailUrls =  await ids.map(data => movieUrls(data, category));
 
-          posterSlider.data =  endData;
-          posterSlider.ids =  ids;
-          posterSlider.details = detailUrls;
+          posterSlider.data =  await endData;
+          posterSlider.ids =  await ids;
+          posterSlider.details = await detailUrls;
 
           func(prev => [...prev, posterSlider]);
         }

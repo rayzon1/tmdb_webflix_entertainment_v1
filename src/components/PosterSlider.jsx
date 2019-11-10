@@ -8,6 +8,7 @@ export default function PosterSlider({
   videoData,
   getPosterStatus,
   category,
+  format,
 }) {
   //! Map urls and combine to path to gather poster backdrops.
   //! https://image.tmdb.org/t/p/w500
@@ -19,13 +20,13 @@ export default function PosterSlider({
     setOpen(true);
   };
 
-  const videoUrls = data => {
-    return `https://api.themoviedb.org/3/movie/${data}/videos?api_key=${authToken}&language=en-US`
+  const videoUrls = (data, category) => {
+    return `https://api.themoviedb.org/3/${category}/${data}/videos?api_key=${authToken}&language=en-US`
   }
 
   // pick youtube video based on index of poster clicked.
   const getYoutubeVideos = (obj) => {
-    const video = axios.get(videoUrls(obj.id));
+    const video = axios.get(videoUrls(obj.id, format));
     video
       .then(async data => {
         const length = await data.data.results.length;
