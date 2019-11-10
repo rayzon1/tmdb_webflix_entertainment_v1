@@ -9,10 +9,7 @@ import {
   changeTvClickState,
   setTvClickedFalse
 } from "../actions/PosterClickActions";
-import axios from "axios";
 import {
-  movieUrls,
-  imdbUrls,
   createContentDetails
 } from "../exports/apiFetchFunctions";
 
