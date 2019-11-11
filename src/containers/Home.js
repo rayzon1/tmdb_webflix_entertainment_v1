@@ -9,11 +9,22 @@ import {
   changeTvClickState,
   setTvClickedFalse
 } from "../actions/PosterClickActions";
-import {
-  createContentDetails
-} from "../exports/apiFetchFunctions";
+import { createContentDetails } from "../exports/apiFetchFunctions";
+import CreatePosterSliderComponent from "../components/helpers/CreatePosterSlider";
+import { newsApiKey } from "../config";
+import filmReel from "../images/film-reel.png";
+import tvIcon from "../images/tv-icon.png";
 
-export default function Home({ posterSliderInformation, tvPosterSliderInformation }) {
+const todayDate = new Date().toISOString().slice(0, 10);
+
+export const movieNewsUrl = category => {
+  return `https://newsapi.org/v2/everything?q=${category}&from=${todayDate}&to=${todayDate}&sortBy=relevancy&apiKey=${newsApiKey}`;
+};
+
+export default function Home({
+  posterSliderInformation,
+  tvPosterSliderInformation
+}) {
   const [contentState, setContentState] = useState(null);
   const [tvContentState, setTvContentState] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +57,7 @@ export default function Home({ posterSliderInformation, tvPosterSliderInformatio
     [dispatch]
   );
 
- // Function to map through 
+  // Function to map through
   const setClickFalse = useCallback(
     arr => {
       return arr.map(cat => {
@@ -62,28 +73,6 @@ export default function Home({ posterSliderInformation, tvPosterSliderInformatio
       return dispatch(setTvClickedFalse(cat));
     });
   }, []);
-
-  
-  //TODO: CREATE OWN COMPONENT AND PASS ARGUMENTS AS PROPS.
-  const createPosterSliderComponent = (title, data, status, category, format) => {
-    return (
-      <>
-        <div
-          className={
-            title === "Top Rated" ? styles.topRatedTitle : styles.title
-          }
-        >
-          {title}
-        </div>
-        <PosterSlider
-          videoData={data}
-          getPosterStatus={status}
-          category={category}
-          format={format}
-        />
-      </>
-    );
-  };
 
   // Movie Click-state categories.
   const category = {
@@ -101,16 +90,16 @@ export default function Home({ posterSliderInformation, tvPosterSliderInformatio
   };
 
   const arr = [
-    {category: 'topRated', index: 0},
-    {category: 'popular', index: 1},
-    {category: 'nowPlaying', index: 2}
-  ]
+    { category: "topRated", index: 0 },
+    { category: "popular", index: 1 },
+    { category: "nowPlaying", index: 2 }
+  ];
 
   const arr2 = [
-    {category: 'topRated', index: 0},
-    {category: 'popular', index: 1},
-    {category: 'airing', index: 2}
-  ]
+    { category: "topRated", index: 0 },
+    { category: "popular", index: 1 },
+    { category: "airing", index: 2 }
+  ];
 
   const mapCreateContentDetails = (index, category) => {
     posterSliderInformation.length === 3 &&
@@ -119,7 +108,7 @@ export default function Home({ posterSliderInformation, tvPosterSliderInformatio
         setContentState,
         clickPosterState[category].index
       );
-  }
+  };
 
   const mapTvCreateContentDetails = (index, category) => {
     tvPosterSliderInformation.length === 3 &&
@@ -128,9 +117,9 @@ export default function Home({ posterSliderInformation, tvPosterSliderInformatio
         setTvContentState,
         tvClickPosterState[category].index
       );
-  }
+  };
 
-  // This will take in the category 
+  // This will take in the category
   const effects = (cat, cat2) => {
     if (cat.clicked) {
       setClickFalse(cat2);
@@ -160,15 +149,14 @@ export default function Home({ posterSliderInformation, tvPosterSliderInformatio
     });
   };
 
-
   //Movie click-state effects
   useEffect(() => {
     effects(clickPosterState.topRated, category.topRated);
     clickPosterState.topRated.clicked &&
       mapClickState(category2, setTvClickedFalse, tvClickPosterState);
     return () => {
-      console.log('Poster-click state unmounted.')
-    }
+      console.log("Poster-click state unmounted.");
+    };
   }, [clickPosterState.topRated.clicked]);
 
   useEffect(() => {
@@ -176,8 +164,8 @@ export default function Home({ posterSliderInformation, tvPosterSliderInformatio
     clickPosterState.popular.clicked &&
       mapClickState(category2, setTvClickedFalse, tvClickPosterState);
     return () => {
-      console.log('Poster-click state unmounted.')
-    }
+      console.log("Poster-click state unmounted.");
+    };
   }, [clickPosterState.popular.clicked]);
 
   useEffect(() => {
@@ -185,10 +173,9 @@ export default function Home({ posterSliderInformation, tvPosterSliderInformatio
     clickPosterState.nowPlaying.clicked &&
       mapClickState(category2, setTvClickedFalse, tvClickPosterState);
     return () => {
-      console.log('Poster-click state unmounted.')
-    }
+      console.log("Poster-click state unmounted.");
+    };
   }, [clickPosterState.nowPlaying.clicked]);
-
 
   //TV click-state effects
   useEffect(() => {
@@ -196,8 +183,8 @@ export default function Home({ posterSliderInformation, tvPosterSliderInformatio
     tvClickPosterState.topRated.clicked &&
       mapClickState(category, setClickedFalse, clickPosterState);
     return () => {
-      console.log('tv-click state unmounted.')
-    }
+      console.log("tv-click state unmounted.");
+    };
   }, [tvClickPosterState.topRated.clicked]);
 
   useEffect(() => {
@@ -205,8 +192,8 @@ export default function Home({ posterSliderInformation, tvPosterSliderInformatio
     tvClickPosterState.popular.clicked &&
       mapClickState(category, setClickedFalse, clickPosterState);
     return () => {
-      console.log('tv-click state unmounted.')
-    }
+      console.log("tv-click state unmounted.");
+    };
   }, [tvClickPosterState.popular.clicked]);
 
   useEffect(() => {
@@ -214,51 +201,50 @@ export default function Home({ posterSliderInformation, tvPosterSliderInformatio
     tvClickPosterState.airing.clicked &&
       mapClickState(category, setClickedFalse, clickPosterState);
     return () => {
-      console.log('tv-click state unmounted.')
-    }
+      console.log("tv-click state unmounted.");
+    };
   }, [tvClickPosterState.airing.clicked]);
 
-
   // Dependencies for poster click effects.
-  // Will only run if the poster click index or clicked bool changes. 
-  const checkState = (cat, index, state) => {    
-    return state[cat].index ||
-    state[cat].clicked ||
-    arr[index].index ||
-    arr[index].category
-  }
-
+  // Will only run if the poster click index or clicked bool changes.
+  const checkState = (cat, index, state) => {
+    return (
+      state[cat].index ||
+      state[cat].clicked ||
+      arr[index].index ||
+      arr[index].category
+    );
+  };
 
   // Gather MOVIE details
-  useEffect(() => {    
+  useEffect(() => {
     mapCreateContentDetails(arr[0].index, arr[0].category);
-  }, [checkState('topRated', 0, clickPosterState)]);
+  }, [checkState("topRated", 0, clickPosterState)]);
 
   useEffect(() => {
     mapCreateContentDetails(arr[1].index, arr[1].category);
-  }, [checkState('popular', 1, clickPosterState)]);
+  }, [checkState("popular", 1, clickPosterState)]);
 
   useEffect(() => {
     mapCreateContentDetails(arr[2].index, arr[2].category);
-  }, [checkState('nowPlaying', 2, clickPosterState)]);
-
+  }, [checkState("nowPlaying", 2, clickPosterState)]);
 
   // Gather TV details
-  useEffect(() => {    
+  useEffect(() => {
     mapTvCreateContentDetails(arr2[0].index, arr2[0].category);
-  }, [checkState('topRated', 0, tvClickPosterState)]);
+  }, [checkState("topRated", 0, tvClickPosterState)]);
 
   useEffect(() => {
     mapTvCreateContentDetails(arr2[1].index, arr2[1].category);
-  }, [checkState('popular', 1, tvClickPosterState)]);
+  }, [checkState("popular", 1, tvClickPosterState)]);
 
   useEffect(() => {
     mapTvCreateContentDetails(arr2[2].index, arr2[2].category);
-  }, [checkState('airing', 2, tvClickPosterState)]);
+  }, [checkState("airing", 2, tvClickPosterState)]);
 
   useEffect(() => {
     tvPosterSliderInformation.length === 3 &&
-      tvContentState  &&
+      tvContentState &&
       console.log(tvContentState);
   }, [tvClickPosterState.topRated.index]);
 
@@ -270,82 +256,107 @@ export default function Home({ posterSliderInformation, tvPosterSliderInformatio
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <h1 className={styles.mainTitle}>Trending Entertainment News</h1>
-      <h1>Movie Categories</h1>
-      {createPosterSliderComponent(
-        "Top Rated",
-        posterSliderInformation.length === 3 && posterSliderInformation[0],
-        dispatchClickState,
-        "topRated",
-        'movie'
-      )}
-      
+
+      <div className={styles.topMovieContainer}>
+        <div style={{ alignSelf: "flex-end" }}>
+          <h1 className={styles.topMovieTitle}>Top Movies</h1>
+        </div>
+        <img
+          src={filmReel}
+          alt="film-reel-logo"
+          className={styles.filmReelLogo}
+        />
+      </div>
+      <CreatePosterSliderComponent
+        title={"Top Rated"}
+        data={
+          posterSliderInformation.length === 3 && posterSliderInformation[0]
+        }
+        status={dispatchClickState}
+        category={"topRated"}
+        format={"movie"}
+      />
       <MovieContent
         posterStatus={clickPosterState.topRated}
-        imdbInformation={contentState  && contentState.imdb.data}
-        details={contentState  && contentState.details.data}
+        imdbInformation={contentState && contentState.imdb.data}
+        details={contentState && contentState.details.data}
       />
-      {createPosterSliderComponent(
-        "Popular",
-        posterSliderInformation.length === 3 && posterSliderInformation[1],
-        dispatchClickState,
-        "popular",
-        'movie'
-      )}
+      <CreatePosterSliderComponent
+        title={"Popular"}
+        data={
+          posterSliderInformation.length === 3 && posterSliderInformation[1]
+        }
+        status={dispatchClickState}
+        category={"popular"}
+        format={"movie"}
+      />
       <MovieContent
         posterStatus={clickPosterState.popular}
-        imdbInformation={contentState  && contentState.imdb.data}
-        details={contentState  && contentState.details.data}
+        imdbInformation={contentState && contentState.imdb.data}
+        details={contentState && contentState.details.data}
       />
-      {createPosterSliderComponent(
-        "Now Playing",
-        posterSliderInformation.length === 3 && posterSliderInformation[2],
-        dispatchClickState,
-        "nowPlaying",
-        'movie'
-      )}
+      <CreatePosterSliderComponent
+        title={"Now Playing"}
+        data={
+          posterSliderInformation.length === 3 && posterSliderInformation[2]
+        }
+        status={dispatchClickState}
+        category={"nowPlaying"}
+        format={"movie"}
+      />
       <MovieContent
         posterStatus={clickPosterState.nowPlaying}
-        imdbInformation={contentState  && contentState.imdb.data}
-        details={contentState  && contentState.details.data}
+        imdbInformation={contentState && contentState.imdb.data}
+        details={contentState && contentState.details.data}
       />
 
-      
-      <h1>TV Categories</h1>
-      {createPosterSliderComponent(
-        "Top Rated",
-        tvPosterSliderInformation.length === 3 && tvPosterSliderInformation[0],
-        dispatchTvClickState,
-        "topRated",
-        'tv'
-      )}
+      <div className={styles.topTvContainer}>
+        <div style={{ alignSelf: "flex-end" }}>
+          <h1 className={styles.topTvTitle}>Top TV</h1>
+        </div>
+        <img src={tvIcon} alt="tv-icon-logo" className={styles.tvIconLogo} />
+      </div>
+      <CreatePosterSliderComponent
+        title={"Top Rated"}
+        data={
+          tvPosterSliderInformation.length === 3 && tvPosterSliderInformation[0]
+        }
+        status={dispatchTvClickState}
+        category={"topRated"}
+        format={"tv"}
+      />
       <MovieContent
         posterStatus={tvClickPosterState.topRated}
-        imdbInformation={tvContentState  && tvContentState.imdb.data}
-        details={tvContentState  && tvContentState.details.data}
+        imdbInformation={tvContentState && tvContentState.imdb.data}
+        details={tvContentState && tvContentState.details.data}
       />
-      {createPosterSliderComponent(
-        "Popular",
-        tvPosterSliderInformation.length === 3 && tvPosterSliderInformation[1],
-        dispatchTvClickState,
-        "popular",
-        'tv'
-      )}
+      <CreatePosterSliderComponent
+        title={"Popular"}
+        data={
+          tvPosterSliderInformation.length === 3 && tvPosterSliderInformation[1]
+        }
+        status={dispatchTvClickState}
+        category={"popular"}
+        format={"tv"}
+      />
       <MovieContent
         posterStatus={tvClickPosterState.popular}
-        imdbInformation={tvContentState  && tvContentState.imdb.data}
-        details={tvContentState  && tvContentState.details.data}
+        imdbInformation={tvContentState && tvContentState.imdb.data}
+        details={tvContentState && tvContentState.details.data}
       />
-      {createPosterSliderComponent(
-        "Now Airing",
-        tvPosterSliderInformation.length === 3 && tvPosterSliderInformation[2],
-        dispatchTvClickState,
-        "airing",
-        'tv'
-      )}
+      <CreatePosterSliderComponent
+        title={"Now Airing"}
+        data={
+          tvPosterSliderInformation.length === 3 && tvPosterSliderInformation[2]
+        }
+        status={dispatchTvClickState}
+        category={"airing"}
+        format={"tv"}
+      />
       <MovieContent
         posterStatus={tvClickPosterState.airing}
-        imdbInformation={tvContentState  && tvContentState.imdb.data}
-        details={tvContentState  && tvContentState.details.data}
+        imdbInformation={tvContentState && tvContentState.imdb.data}
+        details={tvContentState && tvContentState.details.data}
       />
     </div>
   );
