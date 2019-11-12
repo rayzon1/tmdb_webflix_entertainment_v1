@@ -1,0 +1,10 @@
+.container {
+    height: 10vh; 
+    display: flex; 
+    justify-content: center;
+}
+
+.formGroup {
+    width: 50%; 
+    margin-left: 25%;
+}

@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
 import styles from "../modules/container-modules/home-container.module.css";
-import PosterSlider from "../components/PosterSlider";
 import MovieContent from "../components/MovieContent";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -9,17 +8,15 @@ import {
   changeTvClickState,
   setTvClickedFalse
 } from "../actions/PosterClickActions";
-import { createContentDetails } from "../exports/apiFetchFunctions";
+import { createContentDetails, createNewsInformationDetails } from "../exports/apiFetchFunctions";
 import CreatePosterSliderComponent from "../components/helpers/CreatePosterSlider";
-import { newsApiKey } from "../config";
 import filmReel from "../images/film-reel.png";
 import tvIcon from "../images/tv-icon.png";
+import CarouselHead from "../components/Carousel";
+import LoadingSpinner from "../components/LoadingSpinner";
+import Footer from "../components/Footer";
 
-const todayDate = new Date().toISOString().slice(0, 10);
 
-export const movieNewsUrl = category => {
-  return `https://newsapi.org/v2/everything?q=${category}&from=${todayDate}&to=${todayDate}&sortBy=relevancy&apiKey=${newsApiKey}`;
-};
 
 export default function Home({
   posterSliderInformation,
@@ -27,7 +24,7 @@ export default function Home({
 }) {
   const [contentState, setContentState] = useState(null);
   const [tvContentState, setTvContentState] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [movieNews, setMovieNews] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -211,8 +208,7 @@ export default function Home({
     return (
       state[cat].index ||
       state[cat].clicked ||
-      arr[index].index ||
-      arr[index].category
+      !state[cat].clicked
     );
   };
 
@@ -242,11 +238,18 @@ export default function Home({
     mapTvCreateContentDetails(arr2[2].index, arr2[2].category);
   }, [checkState("airing", 2, tvClickPosterState)]);
 
+  // Gather Movie/Entertainment news.
   useEffect(() => {
-    tvPosterSliderInformation.length === 3 &&
-      tvContentState &&
-      console.log(tvContentState);
-  }, [tvClickPosterState.topRated.index]);
+    createNewsInformationDetails(setMovieNews);
+  }, [])
+
+
+  // Console logs
+  useEffect(() => {
+   
+      Object.keys(movieNews).length > 0 && 
+      console.log(movieNews);
+  }, [movieNews]);
 
   // useEffect(() => {
   //   posterSliderInformation.length === 3 &&
@@ -254,8 +257,16 @@ export default function Home({
   // }, [posterSliderInformation.length === 3]);
 
   return (
+    <>
     <div style={{ display: "flex", flexDirection: "column" }}>
       <h1 className={styles.mainTitle}>Trending Entertainment News</h1>
+      {
+        Object.keys(movieNews).length > 0 ?
+        <CarouselHead mediaNews={ movieNews.movieNews.data} /> :
+        <LoadingSpinner/>
+      }
+      
+      <div style={{ height: "5vh" }} />
 
       <div className={styles.topMovieContainer}>
         <div style={{ alignSelf: "flex-end" }}>
@@ -359,5 +370,7 @@ export default function Home({
         details={tvContentState && tvContentState.details.data}
       />
     </div>
+    <Footer />
+    </>
   );
 }
