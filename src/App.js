@@ -21,6 +21,21 @@ function App() {
     []
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [localUsers, setLocalUsers] = useState([]);
+
+  //Local Storage for user signups.
+  const localUser = window.localStorage;
+
+  const checkUserExists = obj => {
+      Object.values(localUser.user).forEach(item => {
+          if(item === obj.name || obj.email || obj.password) {
+            //   localUser.removeItem(local);
+              console.log('User replaced...')
+          }
+      })
+  }
+
+
 
   const [state, setState] = React.useState({
     top: false,
@@ -88,6 +103,16 @@ function App() {
       console.log(tvPosterSliderInformation);
   }, [effectDepend]);
 
+  useEffect(() => {
+    localUsers &&
+    localUsers.forEach(obj => {
+      localUser.setItem(`${Object.keys(localUser).length}`, JSON.stringify(obj));
+    })
+    // const users = JSON.parse(localUser.user);
+    console.log(localUser);
+    console.log(localUsers)
+  }, [localUsers, localUser])
+
   return (
     <HashRouter>
       <Switch>
@@ -122,7 +147,7 @@ function App() {
           <Route
             exact
             path="/signup"
-            render={() => <NewSignUp />}
+            render={() => <NewSignUp setLocalUsers={setLocalUsers} localUsers={localUsers}/>}
           />
         </div>
       </Switch>
