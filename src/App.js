@@ -104,10 +104,13 @@ function App() {
   }, [effectDepend]);
 
   useEffect(() => {
-    localUsers &&
-    localUsers.forEach(obj => {
-      localUser.setItem(`${Object.keys(localUser).length}`, JSON.stringify(obj));
+    
+    localUsers.length > 0 &&
+    localUsers.forEach((data, index) => {
+      localUser.setItem(`user${Object.keys(localUser).length}`, JSON.stringify(data));
     })
+    
+   
     // const users = JSON.parse(localUser.user);
     console.log(localUser);
     console.log(localUsers)
