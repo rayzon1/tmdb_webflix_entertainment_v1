@@ -24,9 +24,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
-
-function ButtonAppBar({ toggleDrawer, history }) {
+function ButtonAppBar({ toggleDrawer, history, section }) {
   const classes = useStyles();
 
   const handleLinks = value => {
@@ -38,10 +36,10 @@ function ButtonAppBar({ toggleDrawer, history }) {
       <AppBar position="static" style={{background: 'rgb(20, 20, 20)'}}>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
-            <MenuIcon />
+            {section !== 'sign-in' && <MenuIcon />}
           </IconButton>
-          <Typography variant="h5" className={classes.title} >
-            WEBFLIX
+          <Typography variant="h5" className={classes.title}>
+            <span onClick={() => handleLinks('/home')} style={{ cursor: 'pointer'}}>WEBFLIX</span>
             <img src={ popcorn_clickart } style={{width: '30px', height: '30px', marginLeft: '10px', marginBottom: '5px'}} />
           </Typography>
           <Button color="inherit" onClick={() => handleLinks('/')}>Login</Button>

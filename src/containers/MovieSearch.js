@@ -11,6 +11,7 @@ import MaterialButton from "../components/MaterialButton";
 import SimpleModal from "../components/Modal";
 import clapperboard from "../images/clapperboard.png";
 import tvIcon from "../images/tvIcon.png";
+import NavBar from "../components/NavBar";
 
 export const searchUrl = (category, query, page) => {
   return `https://api.themoviedb.org/3/search/${category}?api_key=${authToken}&language=en-US&query=${query}&page=${page}&include_adult=false"`;
@@ -36,7 +37,7 @@ export const getVideoKeys = (cat, id) => {
 };
 
 //! https://image.tmdb.org/t/p/w300/ for poster paths
-export default function MovieSearch({ category }) {
+export default function MovieSearch({ category, toggleDrawer }) {
   const [movieSearch, setMovieSearch] = useState("");
   const [clicked, setClicked] = useState(false);
   const [clear, setClear] = useState(false);
@@ -186,6 +187,8 @@ export default function MovieSearch({ category }) {
   }, [active]);
 
   return (
+    <>
+    <NavBar section={"moviesearch"} toggleDrawer={toggleDrawer}/>
     <div>
       <h1 className={styles.title}>{category === 'movie' ? 'Movie Search' : 'TV Search'}</h1>
       <div className={styles.searchContainer}>
@@ -269,5 +272,6 @@ export default function MovieSearch({ category }) {
       </div>
       <Footer />
     </div>
+    </>
   );
 }

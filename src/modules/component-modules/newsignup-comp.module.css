@@ -8,3 +8,10 @@
     width: 50%; 
     margin-left: 25%;
 }
+
+@media only screen and (max-width: 790px) {
+    .formGroup{
+        width: 100%;
+        margin: 0;
+    }
+}

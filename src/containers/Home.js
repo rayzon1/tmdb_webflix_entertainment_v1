@@ -15,12 +15,14 @@ import tvIcon from "../images/tv-icon.png";
 import CarouselHead from "../components/Carousel";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Footer from "../components/Footer";
+import NavBar from "../components/NavBar";
 
 
 
 export default function Home({
   posterSliderInformation,
-  tvPosterSliderInformation
+  tvPosterSliderInformation,
+  toggleDrawer
 }) {
   const [contentState, setContentState] = useState(null);
   const [tvContentState, setTvContentState] = useState(null);
@@ -258,6 +260,7 @@ export default function Home({
 
   return (
     <>
+    <NavBar toggleDrawer={toggleDrawer} section={'home'}/>
     <div style={{ display: "flex", flexDirection: "column" }}>
       <h1 className={styles.mainTitle}>Trending Entertainment News</h1>
       {

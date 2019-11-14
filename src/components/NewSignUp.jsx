@@ -2,64 +2,66 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import styles from "../modules/component-modules/newsignup-comp.module.css";
+import NavBar from "../components/NavBar";
+import { withRouter } from "react-router-dom";
 
 //TODO: CREATE CSS MODULE FOR THIS COMPONENT WITH BREAKPOINTS.
-export default function NewSignUp({ setLocalUsers, localUsers }) {
+function NewSignUp({
+  setLocalUsers,
+  localUsers,
+  localUser,
+  toggleDrawer,
+  history
+}) {
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const newUserObj = {};
-  //   const localUser = window.localStorage;
+  const nameField = React.createRef();
 
-  //   const checkUserExists = obj => {
-  //       Object.values(localUser.user).forEach(item => {
-  //           if(item === obj.name || obj.email || obj.password) {
-  //             //   localUser.removeItem(local);
-  //               console.log('User replaced...')
-  //           }
-  //       })
-  //   }
+  const newUserObj = {};
 
   const submitAction = e => {
     //Prevent submit
     //Add name/email to temp Obj
     //Check if pw and confirm match/ if no/ error.
     e.preventDefault();
-    // localUser.clear();
     newUserObj.name = newName;
     newUserObj.email = newEmail;
     try {
       if (newPassword === confirmPassword) {
         newUserObj.password = newPassword;
         newUserObj.confirm = confirmPassword;
-        // localUser.setItem('user', JSON.stringify(newUserObj));
-
-        setLocalUsers(prev => {
-          try {
-            prev &&
-              prev.forEach(obj => {
-                if (obj.name.toLowerCase() === newUserObj.name.toLowerCase() || obj.email === newUserObj.email) {
-                  throw new Error(`User ${obj.name}, ${obj.email} already exists.`);
-                }
-              });
-            return [...prev, newUserObj];
-          } catch (error) {
-              console.log(error);
+        Object.values(localUser).forEach(data => {
+          if (
+            (newUserObj.name.toLowerCase() ||
+              newUserObj.email.toLowerCase()) ===
+            (JSON.parse(data).name.toLowerCase() ||
+              JSON.parse(data).email.toLowerCase())
+          ) {
+            throw new Error("User already exists.");
           }
         });
+        setLocalUsers([newUserObj]);
+        setTimeout(() => history.replace("/"), 500);
       } else {
         //TODO: SHOW TOOLTIP UPON NON CONFIRMATION
+        nameField.current.value = "";
+        nameField.current.style.borderColor = "red";
+        nameField.current.style.textColor = "red";
         throw new Error("Passwords do not match.");
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 
+ 
+
   return (
     <>
+      <NavBar toggleDrawer={toggleDrawer} section={"sign-in"} />
       <div className={styles.container} />
       <Form onSubmit={e => submitAction(e)}>
         <Form.Group controlId="formBasicName" className={styles.formGroup}>
@@ -71,6 +73,7 @@ export default function NewSignUp({ setLocalUsers, localUsers }) {
             placeholder="Enter name"
             size="lg"
             onChange={e => setNewName(e.target.value)}
+            ref={nameField}
             required
           />
           <Form.Text className="text-muted">
@@ -130,3 +133,5 @@ export default function NewSignUp({ setLocalUsers, localUsers }) {
     </>
   );
 }
+
+export default withRouter(NewSignUp);

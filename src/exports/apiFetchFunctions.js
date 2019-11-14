@@ -94,6 +94,5 @@ export const createNewsInformationDetails = func => {
     })
     .then(() => func(contentContainer))
 
-  console.log(contentContainer);
 }
   

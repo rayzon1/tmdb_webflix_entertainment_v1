@@ -120,13 +120,12 @@ function App() {
     <HashRouter>
       <Switch>
         <div className="App">
-          <NavBar toggleDrawer={toggleDrawer} />
           <TemporaryDrawer
             state={state}
             setState={setState}
             toggleDrawer={toggleDrawer}
           />
-          <Route exact path="/" render={() => <SignIn />} />
+          <Route exact path="/" render={() => <SignIn localUser={localUser} toggleDrawer={toggleDrawer}/>} />
           <Route
             exact
             path="/home"
@@ -134,23 +133,24 @@ function App() {
               <Home
                 posterSliderInformation={posterSliderInformation}
                 tvPosterSliderInformation={tvPosterSliderInformation}
+                toggleDrawer={toggleDrawer}
               />
             )}
           />
           <Route
             exact
             path="/moviesearch"
-            render={() => <MovieSearch category={"movie"} />}
+            render={() => <MovieSearch category={"movie"} toggleDrawer={toggleDrawer} />}
           />
           <Route
             exact
             path="/tvshowsearch"
-            render={() => <MovieSearch category={"tv"} />}
+            render={() => <MovieSearch category={"tv"} toggleDrawer={toggleDrawer}/>}
           />
           <Route
             exact
             path="/signup"
-            render={() => <NewSignUp setLocalUsers={setLocalUsers} localUsers={localUsers}/>}
+            render={() => <NewSignUp setLocalUsers={setLocalUsers} localUsers={localUsers} localUser={localUser} toggleDrawer={toggleDrawer}/>}
           />
         </div>
       </Switch>

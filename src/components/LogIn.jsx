@@ -52,11 +52,34 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function LogIn() {
+export default function LogIn({ localUser }) {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
+  const [signInSuccess, setSignInSuccess] = useState(false);
+
+  const checkLoginDetails = () => {
+    const emails = Object.values(localUser).map(val => JSON.parse(val).email);
+    const passwords = Object.values(localUser).map(
+      val => JSON.parse(val).password
+    );
+    const names = Object.values(localUser).map(val => JSON.parse(val).name);
+    const checkUsers = emails.length > 0 && names.length > 0;
+
+    if (
+      emails.includes(email) &&
+      (passwords[emails.indexOf(email)] === password) &&
+      checkUsers
+    ) {
+      console.log(`sign in success, ${names[emails.indexOf(email)]}`);
+    } else {
+      if(checkUsers) {
+        console.log("fail");
+      } else {
+        console.log('New user sign-up required.')
+      }
+    }
+  };
 
   return (
     <Paper style={{ opacity: "0.9" }}>
@@ -73,8 +96,8 @@ export default function LogIn() {
             className={classes.form}
             onSubmit={e => {
               e.preventDefault();
-              console.log(email);
-              }}
+              checkLoginDetails();
+            }}
             noValidate
           >
             <TextField
@@ -101,7 +124,7 @@ export default function LogIn() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={
                 <Checkbox
                   value="remember"
@@ -110,7 +133,7 @@ export default function LogIn() {
                 />
               }
               label="Remember me"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
