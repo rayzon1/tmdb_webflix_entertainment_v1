@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import styles from "../modules/component-modules/newsignup-comp.module.css";
 import NavBar from "../components/NavBar";
 import { withRouter } from "react-router-dom";
+import TooltipMessage from "../components/TooltipMessage";
 
 //TODO: CREATE CSS MODULE FOR THIS COMPONENT WITH BREAKPOINTS.
 function NewSignUp({
@@ -18,7 +19,15 @@ function NewSignUp({
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const nameField = React.createRef();
+  //Tooltip state
+  const [show, setShow] = useState(false);
+  const [messageState, setMessageState] = useState('');
+  const [refState, setRefState] = useState(null);
+
+  const nameField = React.useRef(null);
+  const emailField = React.useRef(null);
+  const passwordField = React.useRef(null);
+  const confirmPasswordField = React.useRef(null);
 
   const newUserObj = {};
 
@@ -47,9 +56,12 @@ function NewSignUp({
         setTimeout(() => history.replace("/"), 500);
       } else {
         //TODO: SHOW TOOLTIP UPON NON CONFIRMATION
-        nameField.current.value = "";
-        nameField.current.style.borderColor = "red";
-        nameField.current.style.textColor = "red";
+        setMessageState('Passwords do not match.');
+        setRefState(passwordField);
+        // setRefState(confirmPasswordField);
+        setErrorFields(passwordField);
+        setErrorFields(confirmPasswordField);
+        setShow(true);
         throw new Error("Passwords do not match.");
       }
     } catch (error) {
@@ -57,13 +69,20 @@ function NewSignUp({
     }
   };
 
- 
+  //Changes input fields border color and clears values.
+  const setErrorFields = reference => {
+    reference.current.style.borderColor = 'red';
+    reference.current.value = '';
+  }
 
+  
   return (
     <>
       <NavBar toggleDrawer={toggleDrawer} section={"sign-in"} />
       <div className={styles.container} />
+
       <Form onSubmit={e => submitAction(e)}>
+        {refState && <TooltipMessage target={refState} show={show} message={messageState} />}
         <Form.Group controlId="formBasicName" className={styles.formGroup}>
           <div style={{ textAlign: "left" }}>
             <Form.Label>Name</Form.Label>
@@ -90,6 +109,8 @@ function NewSignUp({
             placeholder="Email"
             size="lg"
             onChange={e => setNewEmail(e.target.value)}
+            ref={emailField}
+            required
           />
           <Form.Text className="text-muted">
             Please enter a valid email.
@@ -104,7 +125,9 @@ function NewSignUp({
             type="password"
             placeholder="Password"
             size="lg"
+            ref={passwordField}
             onChange={e => setNewPassword(e.target.value)}
+            required
           />
           <Form.Text className="text-muted">Please enter a password.</Form.Text>
         </Form.Group>
@@ -121,6 +144,8 @@ function NewSignUp({
             placeholder="Confirm password"
             size="lg"
             onChange={e => setConfirmPassword(e.target.value)}
+            ref={confirmPasswordField}
+            required
           />
           <Form.Text className="text-muted">
             Please confirm your password.

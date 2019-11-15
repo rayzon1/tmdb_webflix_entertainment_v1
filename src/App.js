@@ -14,7 +14,6 @@ import {
 } from "./exports/apiFetchFunctions";
 import { HashRouter, Route, Switch } from "react-router-dom";
 
-
 function App() {
   const [posterSliderInformation, setPosterSliderInformation] = useState([]);
   const [tvPosterSliderInformation, setTvPosterSliderInformation] = useState(
@@ -27,15 +26,13 @@ function App() {
   const localUser = window.localStorage;
 
   const checkUserExists = obj => {
-      Object.values(localUser.user).forEach(item => {
-          if(item === obj.name || obj.email || obj.password) {
-            //   localUser.removeItem(local);
-              console.log('User replaced...')
-          }
-      })
-  }
-
-
+    Object.values(localUser.user).forEach(item => {
+      if (item === obj.name || obj.email || obj.password) {
+        //   localUser.removeItem(local);
+        console.log("User replaced...");
+      }
+    });
+  };
 
   const [state, setState] = React.useState({
     top: false,
@@ -55,6 +52,7 @@ function App() {
     setState({ ...state, [side]: open });
   };
 
+  // Gathers movie data from TMDb API for poster-sliders.
   useEffect(() => {
     createPosterSliderInformation(
       movieUrls("top_rated", "movie"),
@@ -76,6 +74,7 @@ function App() {
     );
   }, []);
 
+  // Gathers TV data from TMDb API for poster-sliders.
   useEffect(() => {
     createPosterSliderInformation(
       movieUrls("top_rated", "tv"),
@@ -104,17 +103,18 @@ function App() {
   }, [effectDepend]);
 
   useEffect(() => {
-    
     localUsers.length > 0 &&
-    localUsers.forEach((data, index) => {
-      localUser.setItem(`user${Object.keys(localUser).length}`, JSON.stringify(data));
-    })
-    
-   
+      localUsers.forEach((data, index) => {
+        localUser.setItem(
+          `user${Object.keys(localUser).length}`,
+          JSON.stringify(data)
+        );
+      });
+
     // const users = JSON.parse(localUser.user);
     console.log(localUser);
-    console.log(localUsers)
-  }, [localUsers, localUser])
+    console.log(localUsers);
+  }, [localUsers, localUser]);
 
   return (
     <HashRouter>
@@ -125,32 +125,53 @@ function App() {
             setState={setState}
             toggleDrawer={toggleDrawer}
           />
-          <Route exact path="/" render={() => <SignIn localUser={localUser} toggleDrawer={toggleDrawer}/>} />
           <Route
             exact
-            path="/home"
-            render={() => isLoading ? <LoadingSpinner /> : (
-              <Home
-                posterSliderInformation={posterSliderInformation}
-                tvPosterSliderInformation={tvPosterSliderInformation}
-                toggleDrawer={toggleDrawer}
-              />
+            path="/"
+            render={() => (
+              <SignIn localUser={localUser} toggleDrawer={toggleDrawer} />
             )}
           />
           <Route
             exact
+            path="/home"
+            render={() =>
+              isLoading ? (
+                <LoadingSpinner />
+              ) : (
+                <Home
+                  posterSliderInformation={posterSliderInformation}
+                  tvPosterSliderInformation={tvPosterSliderInformation}
+                  toggleDrawer={toggleDrawer}
+                />
+              )
+            }
+          />
+          <Route
+            exact
             path="/moviesearch"
-            render={() => <MovieSearch category={"movie"} toggleDrawer={toggleDrawer} />}
+            render={() => (
+              <MovieSearch category={"movie"} toggleDrawer={toggleDrawer} />
+            )}
           />
           <Route
             exact
             path="/tvshowsearch"
-            render={() => <MovieSearch category={"tv"} toggleDrawer={toggleDrawer}/>}
+            render={() => (
+              <MovieSearch category={"tv"} toggleDrawer={toggleDrawer} />
+            )}
           />
           <Route
             exact
             path="/signup"
-            render={() => <NewSignUp setLocalUsers={setLocalUsers} localUsers={localUsers} localUser={localUser} toggleDrawer={toggleDrawer}/>}
+            render={() => (
+              <NewSignUp
+                setLocalUsers={setLocalUsers}
+                localUsers={localUsers}
+                localUser={localUser}
+                toggleDrawer={toggleDrawer}
+              />
+            )}
           />
         </div>
       </Switch>

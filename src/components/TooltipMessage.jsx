@@ -3,16 +3,16 @@ import Overlay from 'react-bootstrap/Overlay';
 import Tooltip from 'react-bootstrap/Tooltip';
 
 //TODO: CUSTOMIZE PROPS FOR SPECIFIC ERROR TOOLTIP.
-export default function TooltipMessage() {
-    const [show, setShow] = useState(false);
-    const target = useRef(null);
+export default function TooltipMessage({target, show, message}) {
+    // const [show, setShow] = useState(false);
+    // const target = useRef(null);
   
     return (
       <>
-        <Overlay target={target.current} show={show} placement="right">
+        <Overlay target={target.current} show={show} placement="right" >
           {props => (
-            <Tooltip id="overlay-example" {...props}>
-              My Tooltip
+            <Tooltip id="overlay-example" {...props} >
+              <span style={{color: 'red'}}>{message}</span>
             </Tooltip>
           )}
         </Overlay>
