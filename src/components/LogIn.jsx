@@ -13,13 +13,14 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
+import { withRouter } from "react-router-dom";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        Webflix Entertainment
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -52,11 +53,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function LogIn({ localUser }) {
+function LogIn({ localUser, history, setLoggedInUser }) {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [signInSuccess, setSignInSuccess] = useState(false);
+  // const [signInSuccess, setSignInSuccess] = useState(false);
 
   const checkLoginDetails = () => {
     const emails = Object.values(localUser).map(val => JSON.parse(val).email);
@@ -72,11 +73,15 @@ export default function LogIn({ localUser }) {
       checkUsers
     ) {
       console.log(`sign in success, ${names[emails.indexOf(email)]}`);
+      setLoggedInUser(`${names[emails.indexOf(email)]}`);
+      history.push('/home');
     } else {
-      if(checkUsers) {
-        console.log("fail");
+      if(checkUsers && emails.includes(email) && !passwords.includes(password)) {
+        console.log("Password incorrect, please try again.");
+      } else if (checkUsers && !emails.includes(email)) {
+        console.log('User not found, please try again');
       } else {
-        console.log('New user sign-up required.')
+        console.log('No users found, please create a new account, or try again.')
       }
     }
   };
@@ -164,3 +169,5 @@ export default function LogIn({ localUser }) {
     </Paper>
   );
 }
+
+export default withRouter(LogIn);

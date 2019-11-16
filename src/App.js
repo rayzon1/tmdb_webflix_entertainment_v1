@@ -22,6 +22,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [localUsers, setLocalUsers] = useState([]);
 
+  // Top state will set logged in username to display on NavBar within the home and movie/tv search pages.
+  const [loggedInUser, setLoggedInUser] = useState('');
+
   //Local Storage for user signups.
   const localUser = window.localStorage;
 
@@ -129,7 +132,7 @@ function App() {
             exact
             path="/"
             render={() => (
-              <SignIn localUser={localUser} toggleDrawer={toggleDrawer} />
+              <SignIn localUser={localUser} toggleDrawer={toggleDrawer} setLoggedInUser={setLoggedInUser}/>
             )}
           />
           <Route
@@ -143,6 +146,8 @@ function App() {
                   posterSliderInformation={posterSliderInformation}
                   tvPosterSliderInformation={tvPosterSliderInformation}
                   toggleDrawer={toggleDrawer}
+                  loggedInUser={loggedInUser}
+                  setLoggedInUser={setLoggedInUser}
                 />
               )
             }
@@ -151,14 +156,14 @@ function App() {
             exact
             path="/moviesearch"
             render={() => (
-              <MovieSearch category={"movie"} toggleDrawer={toggleDrawer} />
+              <MovieSearch category={"movie"} toggleDrawer={toggleDrawer} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
             )}
           />
           <Route
             exact
             path="/tvshowsearch"
             render={() => (
-              <MovieSearch category={"tv"} toggleDrawer={toggleDrawer} />
+              <MovieSearch category={"tv"} toggleDrawer={toggleDrawer} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
             )}
           />
           <Route

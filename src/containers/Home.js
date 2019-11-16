@@ -22,7 +22,9 @@ import NavBar from "../components/NavBar";
 export default function Home({
   posterSliderInformation,
   tvPosterSliderInformation,
-  toggleDrawer
+  toggleDrawer,
+  loggedInUser,
+  setLoggedInUser
 }) {
   const [contentState, setContentState] = useState(null);
   const [tvContentState, setTvContentState] = useState(null);
@@ -260,7 +262,7 @@ export default function Home({
 
   return (
     <>
-    <NavBar toggleDrawer={toggleDrawer} section={'home'}/>
+    <NavBar toggleDrawer={toggleDrawer} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
     <div style={{ display: "flex", flexDirection: "column" }}>
       <h1 className={styles.mainTitle}>Trending Entertainment News</h1>
       {

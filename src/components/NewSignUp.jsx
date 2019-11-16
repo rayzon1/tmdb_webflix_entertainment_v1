@@ -19,10 +19,11 @@ function NewSignUp({
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  //Tooltip state
+  // Tooltip state
   const [show, setShow] = useState(false);
   const [messageState, setMessageState] = useState('');
   const [refState, setRefState] = useState(null);
+  const [secondaryRefState, setSecondaryRefState] = useState(null);
 
   const nameField = React.useRef(null);
   const emailField = React.useRef(null);
@@ -32,10 +33,9 @@ function NewSignUp({
   const newUserObj = {};
 
   const submitAction = e => {
-    //Prevent submit
-    //Add name/email to temp Obj
-    //Check if pw and confirm match/ if no/ error.
+    
     e.preventDefault();
+    // Add name and email to user object.
     newUserObj.name = newName;
     newUserObj.email = newEmail;
     try {
@@ -49,18 +49,18 @@ function NewSignUp({
             (JSON.parse(data).name.toLowerCase() ||
               JSON.parse(data).email.toLowerCase())
           ) {
+            setMessageState('User already exists.');
+            setErrorFields(nameField, emailField, 'error');
+            setShow(true);
             throw new Error("User already exists.");
           }
         });
         setLocalUsers([newUserObj]);
         setTimeout(() => history.replace("/"), 500);
       } else {
-        //TODO: SHOW TOOLTIP UPON NON CONFIRMATION
+        // Sets error state on pw fields if they don't match.
         setMessageState('Passwords do not match.');
-        setRefState(passwordField);
-        // setRefState(confirmPasswordField);
-        setErrorFields(passwordField);
-        setErrorFields(confirmPasswordField);
+        setErrorFields(passwordField, confirmPasswordField, 'error');
         setShow(true);
         throw new Error("Passwords do not match.");
       }
@@ -69,13 +69,20 @@ function NewSignUp({
     }
   };
 
-  //Changes input fields border color and clears values.
-  const setErrorFields = reference => {
-    reference.current.style.borderColor = 'red';
-    reference.current.value = '';
+  // Changes input fields border color and clears values.
+  const setErrorFields = (reference, secondReference=null, val) => {
+    if(val === 'error') {
+      setRefState(reference);
+      setSecondaryRefState(secondReference);
+      [reference, secondReference].forEach(val => {
+        val.current.style.borderColor = 'red';
+        val.current.value = '';
+      })
+    } else {
+      reference.current.style.borderColor = '';
+    }
   }
 
-  
   return (
     <>
       <NavBar toggleDrawer={toggleDrawer} section={"sign-in"} />
@@ -83,6 +90,8 @@ function NewSignUp({
 
       <Form onSubmit={e => submitAction(e)}>
         {refState && <TooltipMessage target={refState} show={show} message={messageState} />}
+        {secondaryRefState && <TooltipMessage target={secondaryRefState} show={show} message={messageState} />}
+        
         <Form.Group controlId="formBasicName" className={styles.formGroup}>
           <div style={{ textAlign: "left" }}>
             <Form.Label>Name</Form.Label>
@@ -91,7 +100,11 @@ function NewSignUp({
             type="name"
             placeholder="Enter name"
             size="lg"
-            onChange={e => setNewName(e.target.value)}
+            onChange={e => {
+              setNewName(e.target.value);
+              setErrorFields(nameField, 'clear');
+              setShow(false);
+            }}
             ref={nameField}
             required
           />
@@ -108,7 +121,10 @@ function NewSignUp({
             type="email"
             placeholder="Email"
             size="lg"
-            onChange={e => setNewEmail(e.target.value)}
+            onChange={e => {
+              setNewEmail(e.target.value);
+              setErrorFields(emailField, 'clear');
+            }}
             ref={emailField}
             required
           />
@@ -126,7 +142,11 @@ function NewSignUp({
             placeholder="Password"
             size="lg"
             ref={passwordField}
-            onChange={e => setNewPassword(e.target.value)}
+            onChange={e => {
+              setNewPassword(e.target.value);
+              setErrorFields(passwordField, 'clear');
+              setShow(false);
+            }}
             required
           />
           <Form.Text className="text-muted">Please enter a password.</Form.Text>
@@ -143,7 +163,10 @@ function NewSignUp({
             type="password"
             placeholder="Confirm password"
             size="lg"
-            onChange={e => setConfirmPassword(e.target.value)}
+            onChange={e => {
+              setConfirmPassword(e.target.value);
+              setErrorFields(confirmPasswordField, 'clear');
+            }}
             ref={confirmPasswordField}
             required
           />

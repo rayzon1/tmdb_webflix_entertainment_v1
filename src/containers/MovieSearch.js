@@ -37,7 +37,7 @@ export const getVideoKeys = (cat, id) => {
 };
 
 //! https://image.tmdb.org/t/p/w300/ for poster paths
-export default function MovieSearch({ category, toggleDrawer }) {
+export default function MovieSearch({ category, toggleDrawer, loggedInUser, setLoggedInUser }) {
   const [movieSearch, setMovieSearch] = useState("");
   const [clicked, setClicked] = useState(false);
   const [clear, setClear] = useState(false);
@@ -188,7 +188,7 @@ export default function MovieSearch({ category, toggleDrawer }) {
 
   return (
     <>
-    <NavBar section={"moviesearch"} toggleDrawer={toggleDrawer}/>
+    <NavBar section={"moviesearch"} toggleDrawer={toggleDrawer} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
     <div>
       <h1 className={styles.title}>{category === 'movie' ? 'Movie Search' : 'TV Search'}</h1>
       <div className={styles.searchContainer}>
