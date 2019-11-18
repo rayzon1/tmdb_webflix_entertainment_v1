@@ -212,7 +212,8 @@ export default function Home({
     return (
       state[cat].index ||
       state[cat].clicked ||
-      !state[cat].clicked
+      !state[cat].clicked ||
+      !state[cat].index
     );
   };
 
