@@ -26,7 +26,10 @@ export default function Home({
   loggedInUser,
   setLoggedInUser
 }) {
+
+  // This state will hold the information object of movie details to display.
   const [contentState, setContentState] = useState(null);
+  // This will hold the tv information object state.
   const [tvContentState, setTvContentState] = useState(null);
   const [movieNews, setMovieNews] = useState([]);
 
@@ -40,9 +43,8 @@ export default function Home({
     state => state.posterClickState.tvClickState
   );
 
-  /**
-   * Pass in index of clicked state as well as the category string.
-   */
+  
+  //Pass in index of clicked state as well as the category string. 
   const dispatchClickState = useCallback(
     (i, item) => {
       return dispatch(changeClickState(i, item));
@@ -58,7 +60,7 @@ export default function Home({
     [dispatch]
   );
 
-  // Function to map through
+  // Set click false for movies.
   const setClickFalse = useCallback(
     arr => {
       return arr.map(cat => {
@@ -68,7 +70,7 @@ export default function Home({
     [setClickedFalse]
   );
 
-  //! set tv click false.
+  // Set tv click false.
   const setTvClickFalse = useCallback(arr => {
     return arr.map(cat => {
       return dispatch(setTvClickedFalse(cat));
@@ -211,9 +213,7 @@ export default function Home({
   const checkState = (cat, index, state) => {
     return (
       state[cat].index ||
-      state[cat].clicked ||
-      !state[cat].clicked ||
-      !state[cat].index
+      state[cat].clicked 
     );
   };
 
@@ -250,11 +250,11 @@ export default function Home({
 
 
   // Console logs
-  useEffect(() => {
+  // useEffect(() => {
    
-      Object.keys(movieNews).length > 0 && 
-      console.log(movieNews);
-  }, [movieNews]);
+  //     Object.keys(movieNews).length > 0 && 
+  //     console.log(movieNews);
+  // }, [movieNews]);
 
   // useEffect(() => {
   //   posterSliderInformation.length === 3 &&

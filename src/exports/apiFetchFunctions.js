@@ -39,9 +39,9 @@ export const createPosterSliderInformation = (endpoint, func, category, func2) =
           const ids =  await data.data.results.map(data => data.id);
           const detailUrls =  await ids.map(data => movieUrls(data, category));
 
-          posterSlider.data =  await endData;
-          posterSlider.ids =  await ids;
-          posterSlider.details = await detailUrls;
+          posterSlider.data =  endData;
+          posterSlider.ids =  ids;
+          posterSlider.details = detailUrls;
 
           func(prev => [...prev, posterSlider]);
         }

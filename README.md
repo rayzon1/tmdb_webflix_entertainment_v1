@@ -1,8 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## WebFlix Entertainment.
 
-In the project directory, you can run:
+This is my personal project using React, JavaScript, Redux, and CSS. I have created a movie/tv entertainment news and trailer site, complete with sign-in and sign-out features using local storage. 
 
 ### `npm start`
 

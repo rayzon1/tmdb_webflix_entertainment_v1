@@ -24,7 +24,7 @@
 
 .images {
     width: 100%; 
-    max-height: 90vh;
+    height: 90vh;
 }
 
 @media only screen and (max-width: 790px) {
@@ -44,7 +44,7 @@
 
     .images {
         width: 100%;
-        max-height: 35vh;
+        height: 35vh;
     }
 
 }
