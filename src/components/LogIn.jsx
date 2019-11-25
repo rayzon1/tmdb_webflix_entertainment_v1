@@ -3,8 +3,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 import { withRouter } from "react-router-dom";
+import TooltipMessage from "./TooltipMessage";
 
 function Copyright() {
   return (
@@ -58,7 +59,14 @@ function LogIn({ localUser, history, setLoggedInUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const [signInSuccess, setSignInSuccess] = useState(false);
+  const [refState, setRefState] = useState(null);
+  const [show, setShow] = useState(false);
+  const [messageState, setMessageState] = useState('');
 
+  const emailField = React.useRef(null);
+  const passwordField = React.useRef(null);
+
+  // This will check the login details upon submission of the form.
   const checkLoginDetails = () => {
     const emails = Object.values(localUser).map(val => JSON.parse(val).email);
     const passwords = Object.values(localUser).map(
@@ -77,11 +85,21 @@ function LogIn({ localUser, history, setLoggedInUser }) {
       history.push('/home');
     } else {
       if(checkUsers && emails.includes(email) && !passwords.includes(password)) {
+        // Tooltip errors.
+        setRefState(passwordField);
+        setShow(true);
+        setMessageState("Password incorrect, please try again.");
         console.log("Password incorrect, please try again.");
       } else if (checkUsers && !emails.includes(email)) {
+        setRefState(emailField);
+        setShow(true);
+        setMessageState('User not found, please try again, or make a new account.');
         console.log('User not found, please try again');
       } else {
-        console.log('No users found, please create a new account, or try again.')
+        setRefState(emailField);
+        setShow(true);
+        setMessageState('No users found, please create a new account, or try again.');
+        console.log('No users found, please create a new account, or try again.');
       }
     }
   };
@@ -105,6 +123,7 @@ function LogIn({ localUser, history, setLoggedInUser }) {
             }}
             noValidate
           >
+          {refState && <TooltipMessage target={refState} show={show} message={messageState} />}
             <TextField
               variant="outlined"
               margin="normal"
@@ -113,8 +132,12 @@ function LogIn({ localUser, history, setLoggedInUser }) {
               id="email"
               label="Email Address"
               name="email"
-              onChange={e => setEmail(e.target.value)}
+              onChange={e => {
+                setEmail(e.target.value);
+                setShow(false);
+                }}
               autoComplete="email"
+              ref={emailField}
               autoFocus
             />
             <TextField
@@ -127,6 +150,7 @@ function LogIn({ localUser, history, setLoggedInUser }) {
               label="Password"
               type="password"
               id="password"
+              ref={passwordField}
               autoComplete="current-password"
             />
             {/* <FormControlLabel

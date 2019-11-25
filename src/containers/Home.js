@@ -17,8 +17,6 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 
-
-
 export default function Home({
   posterSliderInformation,
   tvPosterSliderInformation,
@@ -157,27 +155,18 @@ export default function Home({
     effects(clickPosterState.topRated, category.topRated);
     clickPosterState.topRated.clicked &&
       mapClickState(category2, setTvClickedFalse, tvClickPosterState);
-    return () => {
-      console.log("Poster-click state unmounted.");
-    };
   }, [clickPosterState.topRated.clicked]);
 
   useEffect(() => {
     effects(clickPosterState.popular, category.popular);
     clickPosterState.popular.clicked &&
       mapClickState(category2, setTvClickedFalse, tvClickPosterState);
-    return () => {
-      console.log("Poster-click state unmounted.");
-    };
   }, [clickPosterState.popular.clicked]);
 
   useEffect(() => {
     effects(clickPosterState.nowPlaying, category.nowPlaying);
     clickPosterState.nowPlaying.clicked &&
       mapClickState(category2, setTvClickedFalse, tvClickPosterState);
-    return () => {
-      console.log("Poster-click state unmounted.");
-    };
   }, [clickPosterState.nowPlaying.clicked]);
 
   //TV click-state effects
@@ -185,27 +174,18 @@ export default function Home({
     tvEffects(tvClickPosterState.topRated, category2.topRated);
     tvClickPosterState.topRated.clicked &&
       mapClickState(category, setClickedFalse, clickPosterState);
-    return () => {
-      console.log("tv-click state unmounted.");
-    };
   }, [tvClickPosterState.topRated.clicked]);
 
   useEffect(() => {
     tvEffects(tvClickPosterState.popular, category2.popular);
     tvClickPosterState.popular.clicked &&
       mapClickState(category, setClickedFalse, clickPosterState);
-    return () => {
-      console.log("tv-click state unmounted.");
-    };
   }, [tvClickPosterState.popular.clicked]);
 
   useEffect(() => {
     tvEffects(tvClickPosterState.airing, category2.airing);
     tvClickPosterState.airing.clicked &&
       mapClickState(category, setClickedFalse, clickPosterState);
-    return () => {
-      console.log("tv-click state unmounted.");
-    };
   }, [tvClickPosterState.airing.clicked]);
 
   // Dependencies for poster click effects.

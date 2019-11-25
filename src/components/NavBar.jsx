@@ -40,7 +40,7 @@ function ButtonAppBar({
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" style={{ background: "rgb(20, 20, 20)" }}>
+      <AppBar position="fixed" style={{ background: "rgb(20, 20, 20)" }}>
         <Toolbar>
           <IconButton
             edge="start"

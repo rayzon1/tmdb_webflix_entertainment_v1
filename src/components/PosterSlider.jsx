@@ -72,6 +72,7 @@ export default function PosterSlider({
               className={styles.tile__image}
               src={`https://image.tmdb.org/t/p/w300${data.backdrop_path}`}
               alt="tiles"
+              style={{width: '250px', height: "140.625px"}}
             />
           </div>
           <div className={styles.tile__details}>

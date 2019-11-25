@@ -1,6 +1,6 @@
 
 .mainTitle {
-    margin-top: 3vh; 
+    margin-top: 7rem; 
     text-shadow: 2px 2px 4px #000000; 
     font-family: 'Teko', sans-serif; 
     font-size: 75px; 
@@ -67,6 +67,7 @@
 
     .mainTitle {
         font-size: 48px;
+        margin-top: 4.5rem;
     }
 
     .filmReelLogo {
