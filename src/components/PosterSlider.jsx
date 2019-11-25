@@ -3,6 +3,7 @@ import styles from "../modules/component-modules/posterslider-comp.module.css";
 import axios from 'axios';
 import { authToken } from '../config';
 import SimpleModal from "./Modal";
+import $ from "jquery";
 
 export default function PosterSlider({
   videoData,
@@ -66,6 +67,7 @@ export default function PosterSlider({
           onClick={() => {
               getPosterStatus(index, category);
           }}
+          onMouseEnter={() => $(window).width() < 800 && getPosterStatus(index, category)}
         >
           <div className={styles.tile__media}>
             <img
