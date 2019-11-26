@@ -68,6 +68,7 @@ export default function PosterSlider({
               getPosterStatus(index, category);
           }}
           onMouseEnter={() => $(window).width() < 800 && getPosterStatus(index, category)}
+          onMouseLeave={() => $(window).width() < 800 && getPosterStatus(index, category)}
         >
           <div className={styles.tile__media}>
             <img
