@@ -193,7 +193,7 @@ export default function Home({
   const checkState = (cat, index, state) => {
     return (
       state[cat].index ||
-      state[cat].clicked 
+      state[cat].clicked
     );
   };
 

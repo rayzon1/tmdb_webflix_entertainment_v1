@@ -41,14 +41,14 @@ function TemporaryDrawer({ state, setState, toggleDrawer, history }) {
     }
   };
 
-  const getSide = obj => {
-    return Object.keys(obj).forEach((key, index) => {
-      if (Object.values(obj)[index]) {
-        console.log(key);
-        return `${key}`;
-      }
-    })
-  }
+  // const getSide = obj => {
+  //   return Object.keys(obj).forEach((key, index) => {
+  //     if (Object.values(obj)[index]) {
+  //       console.log(key);
+  //       return `${key}`;
+  //     }
+  //   })
+  // }
 
   const sideList = side => (
     <div
@@ -90,13 +90,6 @@ function TemporaryDrawer({ state, setState, toggleDrawer, history }) {
         onClose={toggleDrawer('left', false)}
       >
         {sideList('left')}
-      </Drawer>
-      <Drawer
-        style={{ opacity: "0.8" }}
-        open={state.right}
-        onClose={toggleDrawer('right', false)}
-      >
-        {sideList('right')}
       </Drawer>
     </div>
   );
