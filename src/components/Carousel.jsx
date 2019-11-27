@@ -1,7 +1,6 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import styles from "../modules/component-modules/carousel-comp.module.css";
-import $ from 'jquery';
 
 export default function CarouselHead({ mediaNews }) {
 
@@ -35,7 +34,7 @@ export default function CarouselHead({ mediaNews }) {
                     textShadow: "rgb(0, 0, 0) 2px 2px 4px"
                   }}
                 >
-                  <h3 className={styles.title}>{$(window).width() > 1300 ? data.title : shortenText(data.title)}</h3>
+                  <h3 className={styles.title}>{window.screen.width > 1300 ? data.title : shortenText(data.title)}</h3>
                 </a>
                 <p className={styles.description}>{shortenText(data.description)}</p>
               </Carousel.Caption>

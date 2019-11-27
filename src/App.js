@@ -23,19 +23,10 @@ function App() {
   const [localUsers, setLocalUsers] = useState([]);
 
   // Top state will set logged in username to display on NavBar within the home and movie/tv search pages.
-  const [loggedInUser, setLoggedInUser] = useState('');
+  const [loggedInUser, setLoggedInUser] = useState("");
 
   //Local Storage for user signups.
   const localUser = window.localStorage;
-
-  const checkUserExists = obj => {
-    Object.values(localUser.user).forEach(item => {
-      if (item === obj.name || obj.email || obj.password) {
-        //   localUser.removeItem(local);
-        console.log("User replaced...");
-      }
-    });
-  };
 
   const [state, setState] = React.useState({
     top: false,
@@ -132,7 +123,11 @@ function App() {
             exact
             path="/"
             render={() => (
-              <SignIn localUser={localUser} toggleDrawer={toggleDrawer} setLoggedInUser={setLoggedInUser}/>
+              <SignIn
+                localUser={localUser}
+                toggleDrawer={toggleDrawer}
+                setLoggedInUser={setLoggedInUser}
+              />
             )}
           />
           <Route
@@ -156,14 +151,24 @@ function App() {
             exact
             path="/moviesearch"
             render={() => (
-              <MovieSearch category={"movie"} toggleDrawer={toggleDrawer} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
+              <MovieSearch
+                category={"movie"}
+                toggleDrawer={toggleDrawer}
+                loggedInUser={loggedInUser}
+                setLoggedInUser={setLoggedInUser}
+              />
             )}
           />
           <Route
             exact
             path="/tvshowsearch"
             render={() => (
-              <MovieSearch category={"tv"} toggleDrawer={toggleDrawer} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
+              <MovieSearch
+                category={"tv"}
+                toggleDrawer={toggleDrawer}
+                loggedInUser={loggedInUser}
+                setLoggedInUser={setLoggedInUser}
+              />
             )}
           />
           <Route

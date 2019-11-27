@@ -3,7 +3,6 @@ import styles from "../modules/component-modules/posterslider-comp.module.css";
 import axios from 'axios';
 import { authToken } from '../config';
 import SimpleModal from "./Modal";
-import $ from "jquery";
 
 export default function PosterSlider({
   videoData,

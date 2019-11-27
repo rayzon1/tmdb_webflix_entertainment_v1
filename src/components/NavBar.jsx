@@ -81,14 +81,26 @@ function ButtonAppBar({
 
           {loggedInUser && loggedInUser.length > 0 ? (
             <>
-            <Button
-              color="inherit"
-              onClick={() => {
-                handleLinks("/");
-                setLoggedInUser("");
-              }}
-            >{`Welcome, ${loggedInUser}`}</Button>
-            <button style={{height: '30px', width: '30px', borderRadius: '50%', backgroundColor: 'red', fontSize: '21px', fontWeight: '900'}}>{loggedInUser[0]}</button>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  handleLinks("/");
+                  setLoggedInUser("");
+                }}
+              >{`Welcome, ${loggedInUser}`}</Button>
+              <button
+                style={{
+                  height: "30px",
+                  width: "30px",
+                  borderRadius: "50%",
+                  backgroundColor: "red",
+                  fontSize: "21px",
+                  fontWeight: "900"
+                }}
+                onClick={toggleDrawer('right', true)}
+              >
+                {loggedInUser[0]}
+              </button>
             </>
           ) : (
             <Button color="inherit" onClick={() => handleLinks("/")}>

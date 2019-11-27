@@ -9,13 +9,16 @@ import ListItemText from "@material-ui/core/ListItemText";
 import QuestionAnswer from "@material-ui/icons/QuestionAnswer";
 import HomeIcon from "@material-ui/icons/Home";
 import MovieIcon from "@material-ui/icons/Movie";
+//! Right side account info/ logout icons.
+import ExitToApp from "@material-ui/icons/ExitToApp";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+
 import Tv from "@material-ui/icons/Tv";
 import { withRouter } from "react-router-dom";
-import $ from "jquery";
 
 const useStyles = makeStyles({
   list: {
-    width: $(window).width() > 790 ? 350 : 303,
+    width: window.screen.width > 790 ? 350 : 303,
     backgroundColor: "black",
     height: "100%",
     color: "white"
@@ -37,6 +40,15 @@ function TemporaryDrawer({ state, setState, toggleDrawer, history }) {
       history.replace("tvshowsearch");
     }
   };
+
+  const getSide = obj => {
+    return Object.keys(obj).forEach((key, index) => {
+      if (Object.values(obj)[index]) {
+        console.log(key);
+        return `${key}`;
+      }
+    })
+  }
 
   const sideList = side => (
     <div
@@ -75,9 +87,16 @@ function TemporaryDrawer({ state, setState, toggleDrawer, history }) {
       <Drawer
         style={{ opacity: "0.8" }}
         open={state.left}
-        onClose={toggleDrawer("left", false)}
+        onClose={toggleDrawer('left', false)}
       >
-        {sideList("left")}
+        {sideList('left')}
+      </Drawer>
+      <Drawer
+        style={{ opacity: "0.8" }}
+        open={state.right}
+        onClose={toggleDrawer('right', false)}
+      >
+        {sideList('right')}
       </Drawer>
     </div>
   );
