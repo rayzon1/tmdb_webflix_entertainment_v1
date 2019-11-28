@@ -1,5 +1,5 @@
 .title {
-    margin-top: 5rem; 
+    margin-top: 7rem; 
     text-shadow: rgb(0, 0, 0) 2px 2px 4px;
     font-family: 'Teko', sans-serif; 
     letter-spacing: 8px;
@@ -29,10 +29,8 @@
 }
 
 .images {
-    min-height: 300px;
-    max-height: 300px;
-    max-width: 195px;
-    min-width: 195px;
+    height: 300px;
+    width: 195px;
     margin: 10px 20px 10px 0;
     border-radius: 15px;
     box-shadow: rgb(0, 0, 0) 2px 2px 4px;

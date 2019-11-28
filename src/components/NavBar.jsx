@@ -9,12 +9,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { withRouter } from "react-router-dom";
 import popcorn_clickart from "../images/popcorn_clickart.png";
 
+// Custom MUI styles.
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
-  },
-  menuButton: {
-    // marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
@@ -30,13 +28,23 @@ function ButtonAppBar({
   toggleDrawer,
   history,
   loggedInUser,
-  setLoggedInUser
+  handleClick
 }) {
   const classes = useStyles();
+  const [elWidth, setElWidth] = React.useState(null);
 
   const handleLinks = value => {
     history.replace(value);
   };
+
+  const loginRef = React.createRef();
+
+  React.useEffect(() => {
+    loggedInUser && loggedInUser.length > 0 && window.screen.width > 800 &&
+    setElWidth(loginRef.current.offsetWidth)
+  }, [loggedInUser])
+
+
 
   return (
     <div className={classes.root}>
@@ -55,13 +63,12 @@ function ButtonAppBar({
             <span
               onClick={() => handleLinks("/home")}
               style={
-                // section === "sign-in" || section === "home"
                 !loggedInUser
                   ? { cursor: "pointer", position: "relative" }
                   : {
                       cursor: "pointer",
                       position: "relative",
-                      marginLeft: "8.3rem"
+                      marginLeft: "auto"
                     }
               }
             >
@@ -81,13 +88,14 @@ function ButtonAppBar({
 
           {loggedInUser && loggedInUser.length > 0 ? (
             <>
-              <Button
+            {
+              window.screen.width > 800 &&
+              <div
                 color="inherit"
-                onClick={() => {
-                  handleLinks("/");
-                  setLoggedInUser("");
-                }}
-              >{`Welcome, ${loggedInUser}`}</Button>
+                style={{ marginRight: "7px", marginLeft: `-${elWidth !== null && elWidth -15}px` }}
+                ref={loginRef}
+              >{`${loggedInUser}`}</div>
+            }
               <button
                 style={{
                   height: "30px",
@@ -95,9 +103,11 @@ function ButtonAppBar({
                   borderRadius: "50%",
                   backgroundColor: "red",
                   fontSize: "21px",
-                  fontWeight: "900"
+                  fontWeight: "900",
+                  marginLeft: `${window.screen.width < 800 && 30}px`
                 }}
-                onClick={toggleDrawer('right', true)}
+                //! Provide new component for user account menu.
+                onClick={handleClick}
               >
                 {loggedInUser[0]}
               </button>
