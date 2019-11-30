@@ -263,8 +263,8 @@ export default function Home({
         ) : (
           <LoadingSpinner />
         )}
+        <div style={{ height: "8vh" }} />
         <PaperSection quotes={movieQuotes} />
-
         <div style={{ height: "5vh" }} />
 
         <div className={styles.topMovieContainer}>

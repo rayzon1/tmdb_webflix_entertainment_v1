@@ -22,7 +22,8 @@ export const movieNewsUrl = category => {
 };
 
 
-// Takes in main endpoint for category ex. top_rated, popular.
+// Takes in main endpoint for category ex. top_rated, popular. 
+// Creates whole posterSlider information ex. images, titles, descriptions, etc.
 export const createPosterSliderInformation = (endpoint, func, category, func2) => {
     let posterSlider = {};
     func2(true);
