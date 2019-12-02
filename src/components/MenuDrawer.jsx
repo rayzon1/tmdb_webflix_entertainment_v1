@@ -9,9 +9,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import QuestionAnswer from "@material-ui/icons/QuestionAnswer";
 import HomeIcon from "@material-ui/icons/Home";
 import MovieIcon from "@material-ui/icons/Movie";
-//! Right side account info/ logout icons.
-import ExitToApp from "@material-ui/icons/ExitToApp";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 
 import Tv from "@material-ui/icons/Tv";
 import { withRouter } from "react-router-dom";
@@ -33,11 +30,13 @@ function TemporaryDrawer({ state, setState, toggleDrawer, history }) {
 
   const sideLinks = category => {
     if (category === "Home") {
-      history.replace("/home");
+      history.push("/home");
     } else if (category === "Movie Search") {
-      history.replace("/moviesearch");
+      history.push("/moviesearch");
     } else if (category === "TV Show Search") {
-      history.replace("tvshowsearch");
+      history.push("tvshowsearch");
+    } else if (category === "About") {
+      history.push("/about");
     }
   };
 

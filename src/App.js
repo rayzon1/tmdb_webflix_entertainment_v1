@@ -4,7 +4,7 @@ import TemporaryDrawer from "./components/MenuDrawer";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Home from "./containers/Home";
 import SignIn from "./containers/SignIn";
-import NavBar from "./components/NavBar";
+import About from "./containers/About";
 import MovieSearch from "./containers/MovieSearch";
 import NewSignUp from "./components/NewSignUp";
 import "./App.css";
@@ -34,6 +34,7 @@ function App() {
     bottom: false,
     right: false
   });
+
 
   const toggleDrawer = (side, open) => event => {
     if (
@@ -105,7 +106,7 @@ function App() {
         );
       });
 
-    // const users = JSON.parse(localUser.user);
+    // TODO: DELETE CONSOLE.LOGS BEFORE FINISH.
     console.log(localUser);
     console.log(localUsers);
   }, [localUsers, localUser]);
@@ -181,6 +182,13 @@ function App() {
                 localUser={localUser}
                 toggleDrawer={toggleDrawer}
               />
+            )}
+          />
+          <Route
+            exact
+            path="/about"
+            render={() => (
+              <About toggleDrawer={toggleDrawer} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
             )}
           />
         </div>

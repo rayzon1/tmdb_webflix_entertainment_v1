@@ -70,8 +70,8 @@ export default function PosterSlider({
 
           //TODO: UPDATE TOUCH EVENTS FOR MOBILE SCREENS TO BE MORE RESPONSIVE.
 
-          onTouchStart={() => window.screen.width < 800 && getPosterStatus(index, category)}
-          onTouchEnd={() => window.screen.width < 800 && getPosterStatus(index, category)}
+          onMouseEnter={() => window.screen.width < 800 && getPosterStatus(index, category)}
+          onMouseMove={() => window.screen.width < 800 && getPosterStatus(index, category)}
         >
           <div className={styles.tile__media}>
             <img

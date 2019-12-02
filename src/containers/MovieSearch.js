@@ -37,12 +37,24 @@ export const getVideoKeys = (cat, id) => {
 };
 
 //! https://image.tmdb.org/t/p/w300/ for poster paths
-export default function MovieSearch({ category, toggleDrawer, loggedInUser, setLoggedInUser }) {
+export default function MovieSearch({
+  category,
+  toggleDrawer,
+  loggedInUser,
+  setLoggedInUser
+}) {
+  // Main search string hook.
+  //TODO: Make search bar spin icon show when onChange occurs.
   const [movieSearch, setMovieSearch] = useState("");
+
   const [clicked, setClicked] = useState(false);
+
   const [clear, setClear] = useState(false);
+
   const [movieData, setMovieData] = useState([]);
+
   const [isLoading, setLoading] = useState(false);
+
   const [active, setActive] = useState(1);
 
   //! Index of image clicked
@@ -67,7 +79,11 @@ export default function MovieSearch({ category, toggleDrawer, loggedInUser, setL
   };
 
   const searchApiCall = query => {
-    Axios.get(category === 'movie' ? searchUrl("movie", query, active) : searchUrl("tv", query, active))
+    Axios.get(
+      category === "movie"
+        ? searchUrl("movie", query, active)
+        : searchUrl("tv", query, active)
+    )
       .then(data => {
         if (data.data.results.length < 1) {
           setNoResults(true);
@@ -88,13 +104,11 @@ export default function MovieSearch({ category, toggleDrawer, loggedInUser, setL
 
   const getTrailerKeys = items => {
     let arr = items.map(id => {
-
-      if( category === 'movie' ) {
-        return getVideoKeys('movie', id);
+      if (category === "movie") {
+        return getVideoKeys("movie", id);
       } else {
-        return getVideoKeys('tv', id);
+        return getVideoKeys("tv", id);
       }
-
     });
     setTrailerUrls(arr);
   };
@@ -137,6 +151,8 @@ export default function MovieSearch({ category, toggleDrawer, loggedInUser, setL
 
   trailerData.length > 0 && trailerKeys === null && getYoutubeKeys(trailerData);
 
+  // TODO: This is the side-effect triggered when search button is clicked. 
+  // TODO: Change this to activate when search is started.
   useEffect(() => {
     if (clicked) {
       setNoResults(false);
@@ -188,90 +204,104 @@ export default function MovieSearch({ category, toggleDrawer, loggedInUser, setL
 
   return (
     <>
-    <NavBar section={"moviesearch"} toggleDrawer={toggleDrawer} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
-    <div>
-      <h1 className={styles.title}>{category === 'movie' ? 'Movie Search' : 'TV Search'}</h1>
-      <div className={styles.searchContainer}>
-        <SearchBar search={setMovieSearch} clear={clear} />
-        <div className={styles.buttonContainer}>
-          <MaterialButton
-            text={"Search"}
-            search={movieSearch}
-            clicked={setClicked}
-          />
-          <MaterialButton
-            text={"Clear"}
-            search={movieSearch}
-            clicked={setClear}
+      <NavBar
+        section={"moviesearch"}
+        toggleDrawer={toggleDrawer}
+        loggedInUser={loggedInUser}
+        setLoggedInUser={setLoggedInUser}
+      />
+      <div>
+        <h1 className={styles.title}>
+          {category === "movie" ? "Movie Search" : "TV Search"}
+        </h1>
+        <div className={styles.searchContainer}>
+          <SearchBar search={setMovieSearch} clear={clear} />
+          <div className={styles.buttonContainer}>
+            <MaterialButton
+              text={"Search"}
+              search={movieSearch}
+              clicked={setClicked}
+            />
+            <MaterialButton
+              text={"Clear"}
+              search={movieSearch}
+              clicked={setClear}
+            />
+          </div>
+        </div>
+        <div className={styles.mainSearchContainer}>
+          <div className={styles.searchResultsContainer}>
+            {clicked === false &&
+              movieData.length < 1 &&
+              noResults === false &&
+              (category === "movie" ? (
+                <SearchPlaceHolder
+                  icon={clapperboard}
+                  altText={"clapperboard-icon"}
+                  desc={"Search for your favorite movies!"}
+                />
+              ) : (
+                <SearchPlaceHolder
+                  icon={tvIcon}
+                  altText={"tv-icon"}
+                  desc={"Search for your favorite TV shows!"}
+                />
+              ))}
+            {noResults && <p>NO RESULTS!</p>}
+
+            {isLoading ? (
+              <div>
+                <LoadingSpinner type={"Puff"} />
+              </div>
+            ) : (
+              movieData.length > 0 &&
+              movieData["0"].results.map(
+                (data, index) =>
+                  data.poster_path != null &&
+                  data.backdrop_path != null && (
+                    <img
+                      src={`https://image.tmdb.org/t/p/w200/${data.poster_path}`}
+                      alt="search-images"
+                      className={styles.images}
+                      onClick={e => {
+                        e.target.style.boxShadow = "none";
+                        setImageClickIndex(index);
+                        handleOpen();
+                      }}
+                      onMouseLeave={e =>
+                        (e.target.style.boxShadow = "rgb(0, 0, 0) 2px 2px 4px")
+                      }
+                    />
+                  )
+              )
+            )}
+          </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            margin: "4vh 0"
+          }}
+        >
+          {movieData.length > 0 && (
+            <PaginationBar
+              data={movieData["0"]}
+              setActive={setActive}
+              active={active}
+              setLoading={setLoading}
+            />
+          )}
+          <SimpleModal
+            open={open}
+            setOpen={setOpen}
+            videoKey={trailerKeys}
+            content={video(trailerKeys)}
           />
         </div>
+        <Footer />
       </div>
-      <div className={styles.mainSearchContainer}>
-        <div className={styles.searchResultsContainer}>
-          {clicked === false && movieData.length < 1 && noResults === false && (
-
-            
-            category === 'movie'
-            ? <SearchPlaceHolder icon={clapperboard} altText={"clapperboard-icon"} desc={"Search for your favorite movies!"}/>
-            : <SearchPlaceHolder icon={tvIcon} altText={"tv-icon"} desc={"Search for your favorite TV shows!"}/>
-
-
-          )}
-          {noResults && <p>NO RESULTS!</p>}
-
-          {isLoading ? (
-            <div>
-              <LoadingSpinner type={"Puff"} />
-            </div>
-          ) : (
-            movieData.length > 0 &&
-            movieData["0"].results.map(
-              (data, index) =>
-                data.poster_path != null &&
-                data.backdrop_path != null && (
-                  <img
-                    src={`https://image.tmdb.org/t/p/w200/${data.poster_path}`}
-                    alt="search-images"
-                    className={styles.images}
-                    onClick={e => {
-                      e.target.style.boxShadow = "none";
-                      setImageClickIndex(index);
-                      handleOpen();
-                    }}
-                    onMouseLeave={e =>
-                      (e.target.style.boxShadow = "rgb(0, 0, 0) 2px 2px 4px")
-                    }
-                  />
-                )
-            )
-          )}
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          margin: "4vh 0"
-        }}
-      >
-        {movieData.length > 0 && (
-          <PaginationBar
-            data={movieData["0"]}
-            setActive={setActive}
-            active={active}
-            setLoading={setLoading}
-          />
-        )}
-        <SimpleModal
-          open={open}
-          setOpen={setOpen}
-          videoKey={trailerKeys}
-          content={video(trailerKeys)}
-        />
-      </div>
-      <Footer />
-    </div>
     </>
   );
 }
