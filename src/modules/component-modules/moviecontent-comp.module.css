@@ -24,6 +24,7 @@
   max-width: 62%;
   display: flex;
   flex-direction: column;
+  letter-spacing: 3.5px;
 }
 
 .contentContainer {

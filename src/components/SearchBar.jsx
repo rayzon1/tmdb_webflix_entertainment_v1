@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import styles from '../modules/component-modules/searchbar-comp.module.css';
-import filmReel from '../images/film-reel.png';
 
 export default function SearchBar({ search, clear }) {
 

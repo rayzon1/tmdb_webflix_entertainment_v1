@@ -11,7 +11,7 @@ export default function Footer() {
         {" "}
         &copy; Mona Lisa Productions
       </p>
-      <img src={ticket} className={styles.image}/>
+      <img src={ticket} className={styles.image} alt="ticket"/>
     </div>
   );
 }

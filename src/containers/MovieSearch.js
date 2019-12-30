@@ -36,6 +36,7 @@ export const getVideoKeys = (cat, id) => {
   return `https://api.themoviedb.org/3/${cat}/${id}/videos?api_key=${authToken}&language=en-US`;
 };
 
+
 //! https://image.tmdb.org/t/p/w300/ for poster paths
 export default function MovieSearch({
   category,
@@ -67,9 +68,6 @@ export default function MovieSearch({
   const [noResults, setNoResults] = useState(false);
 
   const [trailerKeys, setTrailerKeys] = useState(null);
-
-  //TODO: create seperate function containing axios call.
-  //! Call function in side-effect when SEARCH button is clicked.
 
   //! Modal Handlers
   const [open, setOpen] = React.useState(false);
@@ -151,9 +149,11 @@ export default function MovieSearch({
 
   trailerData.length > 0 && trailerKeys === null && getYoutubeKeys(trailerData);
 
+
   // TODO: This is the side-effect triggered when search button is clicked. 
   // TODO: Change this to activate when search is started.
   useEffect(() => {
+
     if (clicked) {
       setNoResults(false);
       setLoading(true);
@@ -163,8 +163,12 @@ export default function MovieSearch({
         setClicked(false);
       }, 1000);
     }
+
+    return () => console.log("movie search effect unmounted.")
+
   }, [clicked, setClicked]);
 
+  // Clears all data when clear button is pressed.
   useEffect(() => {
     if (clear) {
       setMovieData([]);
@@ -181,7 +185,6 @@ export default function MovieSearch({
 
   useEffect(() => {
     trailerData.length > 0 && getYoutubeKeys(trailerData);
-
     return () => {
       console.log("youtube keys cleared");
       setTrailerKeys(null);
@@ -198,7 +201,7 @@ export default function MovieSearch({
       setTrailerKeys(null);
       searchApiCall(movieSearch);
 
-      movieData.length > 0 && setLoading(false);
+      movieData && setLoading(false);
     }, 1000);
   }, [active]);
 
@@ -232,7 +235,7 @@ export default function MovieSearch({
         <div className={styles.mainSearchContainer}>
           <div className={styles.searchResultsContainer}>
             {clicked === false &&
-              movieData.length < 1 &&
+              movieData.length === 0 &&
               noResults === false &&
               (category === "movie" ? (
                 <SearchPlaceHolder

@@ -1,9 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import Fade from "react-reveal/Fade";
 import styles from "../modules/component-modules/papersection-comp.module.css";
-import LoadingSpinner from "../components/LoadingSpinner";
-
 
 export default function PaperSection({ quotes, isLoading }) {
 

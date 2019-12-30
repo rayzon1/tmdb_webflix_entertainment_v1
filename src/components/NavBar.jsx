@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -10,27 +9,7 @@ import { withRouter } from "react-router-dom";
 import popcorn_clickart from "../images/popcorn_clickart.png";
 import styles from "../modules/component-modules/navbar-comp.module.css";
 
-// Custom MUI styles.
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     flexGrow: 1
-//   },
-//   title: {
-//     flexGrow: 1,
-//     color: "red",
-//     marginLeft: "30px",
-//     marginLeft: "auto",
-//     marginRight: "auto"
-//   }
-// }));
-
-//TODO: CREATE LOGOUT FEATURE FOR LOGGED IN USER. LOGOUT POPPER WILL CLEAR LOGGEDINUSER STATE AND SEND BACK TO SIGN-IN PAGE.
-function ButtonAppBar({
-  toggleDrawer,
-  history,
-  loggedInUser,
-  handleClick
-}) {
+function ButtonAppBar({ toggleDrawer, history, loggedInUser, handleClick }) {
   // const classes = useStyles();
   const [elWidth, setElWidth] = React.useState(null);
 
@@ -41,11 +20,12 @@ function ButtonAppBar({
   const loginRef = React.createRef();
 
   React.useEffect(() => {
-    loggedInUser && loggedInUser.length > 0 && window.screen.width > 800 &&
-    setElWidth(loginRef.current.offsetWidth)
-  }, [loggedInUser])
-
-
+    loggedInUser &&
+      loggedInUser.length > 0 &&
+      window.screen.width > 800 &&
+      setElWidth(loginRef.current.offsetWidth);
+      return () => console.log('user logged in')
+  }, [loggedInUser]);
 
   return (
     <div className={styles.root}>
@@ -65,32 +45,40 @@ function ButtonAppBar({
               onClick={() => handleLinks("/home")}
               style={
                 !loggedInUser
-                  ? { cursor: "pointer", position: "relative" }
+                  ? {
+                      cursor: "pointer",
+                      position: "relative",
+                      letterSpacing: "3.2px",
+                      fontSize: "28px"
+                    }
                   : {
                       cursor: "pointer",
                       position: "relative",
-                      marginLeft: "auto"
+                      marginLeft: "auto",
+                      letterSpacing: "3.2px",
+                      fontSize: "28px"
                     }
               }
             >
               WEBFLIX
             </span>
-            <img
-              src={popcorn_clickart}
-              className={styles.icon}
-            />
+            <img src={popcorn_clickart} className={styles.icon} alt="popcorn" />
           </Typography>
 
           {loggedInUser && loggedInUser.length > 0 ? (
             <>
-            {
-              window.screen.width > 800 &&
-              <div
-                color="inherit"
-                style={{ marginRight: "7px", marginLeft: `-${elWidth !== null && elWidth -15}px` }}
-                ref={loginRef}
-              >{`${loggedInUser}`}</div>
-            }
+              {window.screen.width > 800 && (
+                <div
+                  color="inherit"
+                  style={{
+                    marginRight: "7px",
+                    marginLeft: `-${elWidth !== null && elWidth - 15}px`,
+                    fontSize: "18px",
+                    letterSpacing: "1px"
+                  }}
+                  ref={loginRef}
+                >{`${loggedInUser}`}</div>
+              )}
               <button
                 style={{
                   height: "30px",
@@ -108,7 +96,11 @@ function ButtonAppBar({
               </button>
             </>
           ) : (
-            <Button color="inherit" onClick={() => handleLinks("/")}>
+            <Button
+              color="inherit"
+              onClick={() => handleLinks("/")}
+              style={{ letterSpacing: "3px", fontSize: "20px" }}
+            >
               Login
             </Button>
           )}

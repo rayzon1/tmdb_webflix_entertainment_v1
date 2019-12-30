@@ -1,5 +1,5 @@
 import PosterClickReducer from "./PosterClickReducer";
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import { createStore, combineReducers, compose } from "redux";
 // import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 

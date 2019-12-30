@@ -25,7 +25,7 @@ export default function MovieContent({
   const createReview = () => {
     return (
       imdbInformation &&
-      imdbInformation.Ratings != undefined &&
+      imdbInformation.Ratings !== undefined &&
       imdbInformation.Ratings.map(data => {
         if (data.Source.includes("Internet")) {
           return (
