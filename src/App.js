@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PosterSlider from "./components/PosterSlider";
 import TemporaryDrawer from "./components/MenuDrawer";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Home from "./containers/Home";
@@ -22,12 +21,14 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [localUsers, setLocalUsers] = useState([]);
 
-  // Top state will set logged in username to display on NavBar within the home and movie/tv search pages.
+  // State will set logged in username to display on NavBar within the home and movie/tv search pages.
   const [loggedInUser, setLoggedInUser] = useState("");
 
-  //Local Storage for user signups.
+  // Local Storage for user signups.
   const localUser = window.localStorage;
 
+  //TODO: MOVE MENU-DRAWER FUNCTIONS TO MENU-DRAWER COMPONENT
+  // State hook for menu drawers.
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -35,7 +36,8 @@ function App() {
     right: false
   });
 
-
+  //TODO: MOVE MENU-DRAWER FUNCTIONS TO MENU-DRAWER COMPONENT
+  // Toggle drawer function for the MaterialUI menu-drawer component.
   const toggleDrawer = (side, open) => event => {
     if (
       event.type === "keydown" &&
@@ -47,7 +49,18 @@ function App() {
     setState({ ...state, [side]: open });
   };
 
+  // Main props object.
+  const globalProps = {
+    loggedInUser,
+    setLoggedInUser,
+    toggleDrawer,
+    localUser,
+    localUsers,
+    setLocalUsers,
+  }
+
   // Gathers movie data from TMDb API for poster-sliders.
+  // Front-loading movie data.
   useEffect(() => {
     createPosterSliderInformation(
       movieUrls("top_rated", "movie"),
@@ -69,7 +82,8 @@ function App() {
     );
   }, []);
 
-  // Gathers TV data from TMDb API for poster-sliders.
+  // Gathers Tv data from TMDb API for poster-sliders.
+  // Front-loading Tv data.
   useEffect(() => {
     createPosterSliderInformation(
       movieUrls("top_rated", "tv"),
@@ -91,12 +105,7 @@ function App() {
     );
   }, []);
 
-  const effectDepend = tvPosterSliderInformation.length === 3;
-  useEffect(() => {
-    tvPosterSliderInformation.length !== 0 &&
-      console.log(tvPosterSliderInformation);
-  }, [effectDepend]);
-
+  // Sets signed-in user to Local Storage, to persist credentials.
   useEffect(() => {
     localUsers.length > 0 &&
       localUsers.forEach((data, index) => {
@@ -111,6 +120,7 @@ function App() {
     console.log(localUsers);
   }, [localUsers, localUser]);
 
+  //TODO: CREATE OBJECT TO HOLD PROPS.
   return (
     <HashRouter>
       <Switch>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../modules/container-modules/home-container.module.css";
 import MovieContent from "../components/MovieContent";
 import { useSelector, useDispatch } from "react-redux";
@@ -53,38 +53,32 @@ export default function Home({
     state => state.posterClickState.tvClickState
   );
 
-  //Pass in index of clicked state as well as the category string.
-  const dispatchClickState = useCallback(
-    (i, item) => {
-      return dispatch(changeClickState(i, item));
-    },
-    [dispatch]
-  );
+  // Pass in index of clicked state as well as the category string.
+  // Sends dispatch to Redux store.
+  // Movie click-state dispatch.
+  const dispatchClickState = (i, item) => {
+    return dispatch(changeClickState(i, item));
+  }
 
   // Tv click-state dispatch
-  const dispatchTvClickState = useCallback(
-    (i, item) => {
-      return dispatch(changeTvClickState(i, item));
-    },
-    [dispatch]
-  );
+  const dispatchTvClickState = (i, item) => {
+    return dispatch(changeTvClickState(i, item));
+  }
 
-  // Set click false for movies.
-  const setClickFalse = useCallback(
-    arr => {
-      return arr.map(cat => {
-        return dispatch(setClickedFalse(cat));
-      });
-    },
-    [setClickedFalse]
-  );
+  // Set click false state.
+  // Set movie click false.
+  const setClickFalse = arr => {
+    arr.map(cat => {
+      return dispatch(setClickedFalse(cat));
+    });
+  }
 
   // Set tv click false.
-  const setTvClickFalse = useCallback(arr => {
-    return arr.map(cat => {
+  const setTvClickFalse = arr => {
+    arr.map(cat => {
       return dispatch(setTvClickedFalse(cat));
     });
-  }, []);
+  }
 
   // Movie Click-state categories.
   const category = {
@@ -131,7 +125,8 @@ export default function Home({
       );
   };
 
-  // This will take in the category
+  // This will take in the category clicked and set
+  // false to secondary category.
   const effects = (cat, cat2) => {
     if (cat.clicked) {
       setClickFalse(cat2);
@@ -235,18 +230,6 @@ export default function Home({
   useEffect(() => {
     createNewsInformationDetails(setMovieNews);
   }, []);
-
-  // Console logs
-  // useEffect(() => {
-
-  //     Object.keys(movieNews).length > 0 &&
-  //     console.log(movieNews);
-  // }, [movieNews]);
-
-  // useEffect(() => {
-  //   posterSliderInformation.length === 3 &&
-  //     console.log(posterSliderInformation[0].details);
-  // }, [posterSliderInformation.length === 3]);
 
   return (
     <>

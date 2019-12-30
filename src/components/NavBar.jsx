@@ -8,20 +8,21 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { withRouter } from "react-router-dom";
 import popcorn_clickart from "../images/popcorn_clickart.png";
+import styles from "../modules/component-modules/navbar-comp.module.css";
 
 // Custom MUI styles.
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
-  title: {
-    flexGrow: 1,
-    color: "red",
-    marginLeft: "30px",
-    marginLeft: "auto",
-    marginRight: "auto"
-  }
-}));
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     flexGrow: 1
+//   },
+//   title: {
+//     flexGrow: 1,
+//     color: "red",
+//     marginLeft: "30px",
+//     marginLeft: "auto",
+//     marginRight: "auto"
+//   }
+// }));
 
 //TODO: CREATE LOGOUT FEATURE FOR LOGGED IN USER. LOGOUT POPPER WILL CLEAR LOGGEDINUSER STATE AND SEND BACK TO SIGN-IN PAGE.
 function ButtonAppBar({
@@ -30,7 +31,7 @@ function ButtonAppBar({
   loggedInUser,
   handleClick
 }) {
-  const classes = useStyles();
+  // const classes = useStyles();
   const [elWidth, setElWidth] = React.useState(null);
 
   const handleLinks = value => {
@@ -47,19 +48,19 @@ function ButtonAppBar({
 
 
   return (
-    <div className={classes.root}>
+    <div className={styles.root}>
       <AppBar position="fixed" style={{ background: "rgb(20, 20, 20)" }}>
         <Toolbar>
           <IconButton
             edge="start"
-            className={classes.menuButton}
+            // className={classes.menuButton}
             color="inherit"
             aria-label="menu"
             onClick={toggleDrawer("left", true)}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h5" className={classes.title}>
+          <Typography variant="h5" className={styles.title}>
             <span
               onClick={() => handleLinks("/home")}
               style={
@@ -76,13 +77,7 @@ function ButtonAppBar({
             </span>
             <img
               src={popcorn_clickart}
-              style={{
-                width: "30px",
-                height: "30px",
-                marginLeft: "10px",
-                marginBottom: "5px",
-                position: "absolute"
-              }}
+              className={styles.icon}
             />
           </Typography>
 

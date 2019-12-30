@@ -16,8 +16,8 @@ export default function CarouselHead({ mediaNews }) {
     >
       <Carousel className={styles.container}>
         {mediaNews &&
-          mediaNews.articles.map(data => (
-            <Carousel.Item fade={true}>
+          mediaNews.articles.map((data, index) => (
+            <Carousel.Item fade={true} key={index}>
               <img
                 src={data.urlToImage}
                 alt="First slide"

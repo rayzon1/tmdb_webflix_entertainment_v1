@@ -18,9 +18,9 @@ export default function PaperSection({ quotes, isLoading }) {
           <div className={styles.quoteContainer}>
             {
               quotes &&
-              quotes.map(data => (
+              quotes.map((data, index) => (
                 <>
-                  <div className={styles.quotes}>
+                  <div className={styles.quotes} key={index}>
                     <h4 style={{ textAlign: "center" }}>
                       {'"' + data.quote + '"'}
                     </h4>
