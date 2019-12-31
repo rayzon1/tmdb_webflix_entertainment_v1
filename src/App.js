@@ -59,50 +59,34 @@ function App() {
     setLocalUsers,
   }
 
+
   // Gathers movie data from TMDb API for poster-sliders.
   // Front-loading movie data.
   useEffect(() => {
-    createPosterSliderInformation(
-      movieUrls("top_rated", "movie"),
-      setPosterSliderInformation,
-      "movie",
-      setIsLoading
-    );
-    createPosterSliderInformation(
-      movieUrls("popular", "movie"),
-      setPosterSliderInformation,
-      "movie",
-      setIsLoading
-    );
-    createPosterSliderInformation(
-      movieUrls("now_playing", "movie"),
-      setPosterSliderInformation,
-      "movie",
-      setIsLoading
-    );
+    const categories = ["top_rated", "popular", "now_playing"];
+    categories.forEach(data => {
+       return createPosterSliderInformation(
+          movieUrls(data, "movie"),
+          setPosterSliderInformation,
+          "movie",
+          setIsLoading
+        );
+    })
   }, []);
 
   // Gathers Tv data from TMDb API for poster-sliders.
   // Front-loading Tv data.
   useEffect(() => {
-    createPosterSliderInformation(
-      movieUrls("top_rated", "tv"),
-      setTvPosterSliderInformation,
-      "tv",
-      setIsLoading
-    );
-    createPosterSliderInformation(
-      movieUrls("popular", "tv"),
-      setTvPosterSliderInformation,
-      "tv",
-      setIsLoading
-    );
-    createPosterSliderInformation(
-      movieUrls("on_the_air", "tv"),
-      setTvPosterSliderInformation,
-      "tv",
-      setIsLoading
-    );
+    const categories = ["top_rated", "popular", "on_the_air"];
+    categories.forEach(data => {
+      return createPosterSliderInformation(
+        movieUrls(data, "tv"),
+        setTvPosterSliderInformation,
+        "tv",
+        setIsLoading
+      );
+    })
+
   }, []);
 
   // Sets signed-in user to Local Storage, to persist credentials.
