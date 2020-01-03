@@ -7,7 +7,7 @@ export default function SearchPlaceholder({ icon, altText, desc }) {
     <div>
       <div style={{ height: "18vh" }} />
       <Fade>
-        <p>
+        <p style={{letterSpacing: '2.5px'}}>
           <em>{desc}</em>
         </p>
         <img

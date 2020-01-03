@@ -9,7 +9,8 @@ import { withRouter } from "react-router-dom";
 import popcorn_clickart from "../images/popcorn_clickart.png";
 import styles from "../modules/component-modules/navbar-comp.module.css";
 
-function ButtonAppBar({ toggleDrawer, history, loggedInUser, handleClick }) {
+
+function ButtonAppBar({ toggleDrawer, history, loggedInUser, handleClick, setLoggedInUser }) {
   // const classes = useStyles();
   const [elWidth, setElWidth] = React.useState(null);
 

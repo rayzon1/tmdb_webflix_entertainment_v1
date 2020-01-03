@@ -13,6 +13,7 @@ const useStyles = makeStyles({
   });
 
 function SimpleMenu({ anchorEl, setAnchorEl, history, setLoggedInUser }) {
+
   const classes = useStyles();
 
   const handleClose = () => {
@@ -24,12 +25,13 @@ function SimpleMenu({ anchorEl, setAnchorEl, history, setLoggedInUser }) {
   };
 
   return (
+   
     <div>
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
         keepMounted
-        open={Boolean(anchorEl)}
+        open={anchorEl}
         onClose={handleClose}
         classes={{paper: classes.paper}}
       >
@@ -40,6 +42,7 @@ function SimpleMenu({ anchorEl, setAnchorEl, history, setLoggedInUser }) {
         }}>Logout</MenuItem>
       </Menu>
     </div>
+
   );
 }
 

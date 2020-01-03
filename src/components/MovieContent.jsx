@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../modules/component-modules/moviecontent-comp.module.css";
 import imdb_logo from "../images/icons/imdb_logo.png";
 import metacritic from "../images/icons/metacritic.png";
 import rt from "../images/icons/rt.png";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function MovieContent({
   // data, 
@@ -12,9 +13,6 @@ export default function MovieContent({
   imdbInformation, // returned imdb object from OMDb API. This contains ratings array plus details.
 }) {
 
-  // Poster index from Redux state
-  // const posterIndex = posterStatus.index;
-
   // Logo icons.
   const reviewLogos = {
     imdb_logo,
@@ -22,7 +20,7 @@ export default function MovieContent({
     rt
   };
 
-  const createReview = () => {
+  const CreateReview = () => {
     return (
       imdbInformation &&
       imdbInformation.Ratings !== undefined &&
@@ -65,28 +63,30 @@ export default function MovieContent({
   };
 
   return (
+    details &&
       <div className={posterStatus.clicked ? styles.content : styles.hideContent}>
         <div className={styles.summary}>
           <div className={styles.contentContainer}>
-            {details ? details.overview : <LoadingSpinner /> }
+            {/* {details ? details.overview : <LoadingSpinner /> } */}
+            {details && details.overview }
           </div>
           <div className={styles.reviewContainer}>
-            {createReview()}
+            <CreateReview />
           </div>
           <div className={styles.productionLogoContainer}>
             {details &&
-              details.production_companies !== undefined ?
+              details.production_companies &&
               details.production_companies.map(
                 data =>
-                  data !== undefined && 
-                  data.logo_path !== null && ( 
+                  data && 
+                  data.logo_path && ( 
                       <img
                         src={`https://image.tmdb.org/t/p/w500${data.logo_path}`}
                         className={styles.productionLogo}
                         alt="production-logo"
                       />
                   )
-              ) : <LoadingSpinner/>
+              ) 
               }
           </div>
         </div>

@@ -12,6 +12,7 @@ import SimpleModal from "../components/Modal";
 import clapperboard from "../images/clapperboard.png";
 import tvIcon from "../images/tvIcon.png";
 import NavBar from "../components/NavBar";
+import SimpleMenu from "../components/AccountMenu";
 
 export const searchUrl = (category, query, page) => {
   return `https://api.themoviedb.org/3/search/${category}?api_key=${authToken}&language=en-US&query=${query}&page=${page}&include_adult=false"`;
@@ -58,6 +59,8 @@ export default function MovieSearch({
 
   const [active, setActive] = useState(1);
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   //! Index of image clicked
   const [imageClickIndex, setImageClickIndex] = useState(0);
 
@@ -74,6 +77,10 @@ export default function MovieSearch({
 
   const handleOpen = () => {
     setOpen(true);
+  };
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
   };
 
   const searchApiCall = query => {
@@ -212,7 +219,9 @@ export default function MovieSearch({
         toggleDrawer={toggleDrawer}
         loggedInUser={loggedInUser}
         setLoggedInUser={setLoggedInUser}
+        handleClick={handleClick}
       />
+      <SimpleMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} setLoggedInUser={setLoggedInUser} />
       <div>
         <h1 className={styles.title}>
           {category === "movie" ? "Movie Search" : "TV Search"}

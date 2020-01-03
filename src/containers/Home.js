@@ -156,6 +156,7 @@ export default function Home({
     });
   };
 
+  
   //Movie click-state effects
   useEffect(() => {
     effects(clickPosterState.topRated, category.topRated);
@@ -174,6 +175,8 @@ export default function Home({
     clickPosterState.nowPlaying.clicked &&
       mapClickState(category2, setTvClickedFalse, tvClickPosterState);
   }, [clickPosterState.nowPlaying.clicked]);
+
+
 
   //TV click-state effects
   useEffect(() => {
