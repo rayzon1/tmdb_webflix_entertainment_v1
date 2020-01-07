@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from '@material-ui/core/Modal';
 import styles from "../modules/component-modules/modal-comp.module.css";
+import NoContent from "./NoContent";
 
 export default function SimpleModal({ open, setOpen, clickedVideo, content }) {
   const handleClose = () => {
@@ -19,7 +20,7 @@ export default function SimpleModal({ open, setOpen, clickedVideo, content }) {
       >
         <div className={styles.paper}>
           {clickedVideo === "nope" ? (
-            <p>Sorry No Content</p>
+            <NoContent />
           ) : (
             content
           )}

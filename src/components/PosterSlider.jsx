@@ -67,7 +67,6 @@ export default function PosterSlider({
               getPosterStatus(index, category);
           }}
 
-
           //TODO: UPDATE TOUCH EVENTS FOR MOBILE SCREENS TO BE MORE RESPONSIVE.
 
           onMouseEnter={() => window.screen.width < 800 && getPosterStatus(index, category)}

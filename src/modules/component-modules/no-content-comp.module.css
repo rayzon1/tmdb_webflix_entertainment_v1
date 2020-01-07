@@ -1,0 +1,15 @@
+.contentContainer {
+  background-color: #6d6d6d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85%;
+  width: 85%;
+  color: black;
+  text-transform: uppercase;
+  color: red;
+}
+
+.contentMain {
+  margin-right: 1rem;
+}

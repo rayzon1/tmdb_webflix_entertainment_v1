@@ -6,6 +6,7 @@ import SignIn from "./containers/SignIn";
 import About from "./containers/About";
 import MovieSearch from "./containers/MovieSearch";
 import NewSignUp from "./components/NewSignUp";
+import AccountInfo from "./components/AccountInfo";
 import "./App.css";
 import {
   movieUrls,
@@ -56,22 +57,21 @@ function App() {
     toggleDrawer,
     localUser,
     localUsers,
-    setLocalUsers,
-  }
-
+    setLocalUsers
+  };
 
   // Gathers movie data from TMDb API for poster-sliders.
   // Front-loading movie data.
   useEffect(() => {
     const categories = ["top_rated", "popular", "now_playing"];
     categories.forEach(data => {
-       return createPosterSliderInformation(
-          movieUrls(data, "movie"),
-          setPosterSliderInformation,
-          "movie",
-          setIsLoading
-        );
-    })
+      return createPosterSliderInformation(
+        movieUrls(data, "movie"),
+        setPosterSliderInformation,
+        "movie",
+        setIsLoading
+      );
+    });
   }, []);
 
   // Gathers Tv data from TMDb API for poster-sliders.
@@ -85,8 +85,7 @@ function App() {
         "tv",
         setIsLoading
       );
-    })
-
+    });
   }, []);
 
   // Sets signed-in user to Local Storage, to persist credentials.
@@ -106,88 +105,95 @@ function App() {
 
   //TODO: CREATE OBJECT TO HOLD PROPS.
   return (
-    <HashRouter>
-      <Switch>
-        <div className="App">
-          <TemporaryDrawer
-            state={state}
-            setState={setState}
-            toggleDrawer={toggleDrawer}
-          />
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <SignIn
-                localUser={localUser}
-                toggleDrawer={toggleDrawer}
-                setLoggedInUser={setLoggedInUser}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/home"
-            render={() =>
-              isLoading ? (
-                <LoadingSpinner />
-              ) : (
-                <Home
-                  posterSliderInformation={posterSliderInformation}
-                  tvPosterSliderInformation={tvPosterSliderInformation}
+    <>
+      <HashRouter>
+        <Switch>
+          <div className="App">
+            <TemporaryDrawer
+              state={state}
+              setState={setState}
+              toggleDrawer={toggleDrawer}
+            />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <SignIn
+                  localUser={localUser}
+                  toggleDrawer={toggleDrawer}
+                  setLoggedInUser={setLoggedInUser}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/home"
+              render={() =>
+                isLoading ? (
+                  <LoadingSpinner />
+                ) : (
+                  <Home
+                    posterSliderInformation={posterSliderInformation}
+                    tvPosterSliderInformation={tvPosterSliderInformation}
+                    toggleDrawer={toggleDrawer}
+                    loggedInUser={loggedInUser}
+                    setLoggedInUser={setLoggedInUser}
+                  />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/moviesearch"
+              render={() => (
+                <MovieSearch
+                  category={"movie"}
                   toggleDrawer={toggleDrawer}
                   loggedInUser={loggedInUser}
                   setLoggedInUser={setLoggedInUser}
                 />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/moviesearch"
-            render={() => (
-              <MovieSearch
-                category={"movie"}
-                toggleDrawer={toggleDrawer}
-                loggedInUser={loggedInUser}
-                setLoggedInUser={setLoggedInUser}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/tvshowsearch"
-            render={() => (
-              <MovieSearch
-                category={"tv"}
-                toggleDrawer={toggleDrawer}
-                loggedInUser={loggedInUser}
-                setLoggedInUser={setLoggedInUser}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/signup"
-            render={() => (
-              <NewSignUp
-                setLocalUsers={setLocalUsers}
-                localUsers={localUsers}
-                localUser={localUser}
-                toggleDrawer={toggleDrawer}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/about"
-            render={() => (
-              <About toggleDrawer={toggleDrawer} loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
-            )}
-          />
-        </div>
-      </Switch>
-    </HashRouter>
+              )}
+            />
+            <Route
+              exact
+              path="/tvshowsearch"
+              render={() => (
+                <MovieSearch
+                  category={"tv"}
+                  toggleDrawer={toggleDrawer}
+                  loggedInUser={loggedInUser}
+                  setLoggedInUser={setLoggedInUser}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/signup"
+              render={() => (
+                <NewSignUp
+                  setLocalUsers={setLocalUsers}
+                  localUsers={localUsers}
+                  localUser={localUser}
+                  toggleDrawer={toggleDrawer}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/about"
+              render={() => (
+                <About
+                  toggleDrawer={toggleDrawer}
+                  loggedInUser={loggedInUser}
+                  setLoggedInUser={setLoggedInUser}
+                />
+              )}
+            />
+            <Route exact path="/account" render={() => <AccountInfo />} />
+          </div>
+        </Switch>
+      </HashRouter>
+    </>
   );
 }
 

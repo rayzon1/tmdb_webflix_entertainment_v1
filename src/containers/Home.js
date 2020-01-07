@@ -58,12 +58,12 @@ export default function Home({
   // Movie click-state dispatch.
   const dispatchClickState = (i, item) => {
     return dispatch(changeClickState(i, item));
-  }
+  };
 
   // Tv click-state dispatch
   const dispatchTvClickState = (i, item) => {
     return dispatch(changeTvClickState(i, item));
-  }
+  };
 
   // Set click false state.
   // Set movie click false.
@@ -71,14 +71,14 @@ export default function Home({
     arr.map(cat => {
       return dispatch(setClickedFalse(cat));
     });
-  }
+  };
 
   // Set tv click false.
   const setTvClickFalse = arr => {
     arr.map(cat => {
       return dispatch(setTvClickedFalse(cat));
     });
-  }
+  };
 
   // Movie Click-state categories.
   const category = {
@@ -156,7 +156,6 @@ export default function Home({
     });
   };
 
-  
   //Movie click-state effects
   useEffect(() => {
     effects(clickPosterState.topRated, category.topRated);
@@ -175,8 +174,6 @@ export default function Home({
     clickPosterState.nowPlaying.clicked &&
       mapClickState(category2, setTvClickedFalse, tvClickPosterState);
   }, [clickPosterState.nowPlaying.clicked]);
-
-
 
   //TV click-state effects
   useEffect(() => {
@@ -234,6 +231,28 @@ export default function Home({
     createNewsInformationDetails(setMovieNews);
   }, []);
 
+  const topCategories = {
+    movieCategories: ["topRated", "popular", "nowPlaying"],
+    movieNames: ["Top Rated", "Popular", "Now Playing"],
+    tvCategories: ["topRated", "popular", "airing"],
+    tvNames: ["Top Rated", "Popular", "Now Airing"]
+  };
+
+  const MovieTitleContainer = () => {
+    return (
+      <div className={styles.topMovieContainer}>
+        <div style={{ alignSelf: "flex-end" }}>
+          <h1 className={styles.topMovieTitle}>Top Movies</h1>
+        </div>
+        <img
+          src={filmReel}
+          alt="film-reel-logo"
+          className={styles.filmReelLogo}
+        />
+      </div>
+    )
+  }
+
   return (
     <>
       <NavBar
@@ -241,7 +260,11 @@ export default function Home({
         loggedInUser={loggedInUser}
         handleClick={handleClick}
       />
-      <SimpleMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} setLoggedInUser={setLoggedInUser} />
+      <SimpleMenu
+        anchorEl={anchorEl}
+        setAnchorEl={setAnchorEl}
+        setLoggedInUser={setLoggedInUser}
+      />
       <div style={{ display: "flex", flexDirection: "column" }}>
         <h1 className={styles.mainTitle}>Trending Entertainment News</h1>
         {Object.keys(movieNews).length > 0 ? (
@@ -253,58 +276,31 @@ export default function Home({
         <PaperSection quotes={movieQuotes} />
         <div style={{ height: "5vh" }} />
 
-        <div className={styles.topMovieContainer}>
-          <div style={{ alignSelf: "flex-end" }}>
-            <h1 className={styles.topMovieTitle}>Top Movies</h1>
-          </div>
-          <img
-            src={filmReel}
-            alt="film-reel-logo"
-            className={styles.filmReelLogo}
-          />
-        </div>
-        <CreatePosterSliderComponent
-          title={"Top Rated"}
-          data={
-            posterSliderInformation.length === 3 && posterSliderInformation[0]
-          }
-          status={dispatchClickState}
-          category={"topRated"}
-          format={"movie"}
-        />
-        <MovieContent
-          posterStatus={clickPosterState.topRated}
-          imdbInformation={contentState && contentState.imdb.data}
-          details={contentState && contentState.details.data}
-        />
-        <CreatePosterSliderComponent
-          title={"Popular"}
-          data={
-            posterSliderInformation.length === 3 && posterSliderInformation[1]
-          }
-          status={dispatchClickState}
-          category={"popular"}
-          format={"movie"}
-        />
-        <MovieContent
-          posterStatus={clickPosterState.popular}
-          imdbInformation={contentState && contentState.imdb.data}
-          details={contentState && contentState.details.data}
-        />
-        <CreatePosterSliderComponent
-          title={"Now Playing"}
-          data={
-            posterSliderInformation.length === 3 && posterSliderInformation[2]
-          }
-          status={dispatchClickState}
-          category={"nowPlaying"}
-          format={"movie"}
-        />
-        <MovieContent
-          posterStatus={clickPosterState.nowPlaying}
-          imdbInformation={contentState && contentState.imdb.data}
-          details={contentState && contentState.details.data}
-        />
+        <MovieTitleContainer />
+        
+        {topCategories.movieCategories.map((data, index) => (
+          <>
+            <CreatePosterSliderComponent
+              title={topCategories.movieNames[index]}
+              data={
+                posterSliderInformation.length === 3 &&
+                posterSliderInformation[index]
+              }
+              status={dispatchClickState}
+              category={data}
+              format={"movie"}
+            />
+
+            <MovieContent
+              posterStatus={clickPosterState[data]}
+              imdbInformation={contentState && contentState.imdb.data}
+              details={contentState && contentState.details.data}
+            />
+          </>
+        ))}
+
+        {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
+
 
         <div className={styles.topTvContainer}>
           <div style={{ alignSelf: "flex-end" }}>
@@ -312,51 +308,27 @@ export default function Home({
           </div>
           <img src={tvIcon} alt="tv-icon-logo" className={styles.tvIconLogo} />
         </div>
-        <CreatePosterSliderComponent
-          title={"Top Rated"}
-          data={
-            tvPosterSliderInformation.length === 3 &&
-            tvPosterSliderInformation[0]
-          }
-          status={dispatchTvClickState}
-          category={"topRated"}
-          format={"tv"}
-        />
-        <MovieContent
-          posterStatus={tvClickPosterState.topRated}
-          imdbInformation={tvContentState && tvContentState.imdb.data}
-          details={tvContentState && tvContentState.details.data}
-        />
-        <CreatePosterSliderComponent
-          title={"Popular"}
-          data={
-            tvPosterSliderInformation.length === 3 &&
-            tvPosterSliderInformation[1]
-          }
-          status={dispatchTvClickState}
-          category={"popular"}
-          format={"tv"}
-        />
-        <MovieContent
-          posterStatus={tvClickPosterState.popular}
-          imdbInformation={tvContentState && tvContentState.imdb.data}
-          details={tvContentState && tvContentState.details.data}
-        />
-        <CreatePosterSliderComponent
-          title={"Now Airing"}
-          data={
-            tvPosterSliderInformation.length === 3 &&
-            tvPosterSliderInformation[2]
-          }
-          status={dispatchTvClickState}
-          category={"airing"}
-          format={"tv"}
-        />
-        <MovieContent
-          posterStatus={tvClickPosterState.airing}
-          imdbInformation={tvContentState && tvContentState.imdb.data}
-          details={tvContentState && tvContentState.details.data}
-        />
+
+        {topCategories.tvCategories.map((data, index) => (
+          <>
+            <CreatePosterSliderComponent
+              title={topCategories.tvNames[index]}
+              data={
+                tvPosterSliderInformation.length === 3 &&
+                tvPosterSliderInformation[index]
+              }
+              status={dispatchTvClickState}
+              category={data}
+              format={"tv"}
+            />
+
+            <MovieContent
+              posterStatus={tvClickPosterState[data]}
+              imdbInformation={tvContentState && tvContentState.imdb.data}
+              details={tvContentState && tvContentState.details.data}
+            />
+          </>
+        ))}
       </div>
       <Footer />
     </>
