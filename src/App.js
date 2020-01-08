@@ -189,7 +189,17 @@ function App() {
                 />
               )}
             />
-            <Route exact path="/account" render={() => <AccountInfo />} />
+            <Route
+              exact
+              path="/account"
+              render={() => (
+                <AccountInfo
+                  toggleDrawer={toggleDrawer}
+                  loggedInUser={loggedInUser}
+                  setLoggedInUser={setLoggedInUser}
+                />
+              )}
+            />
           </div>
         </Switch>
       </HashRouter>

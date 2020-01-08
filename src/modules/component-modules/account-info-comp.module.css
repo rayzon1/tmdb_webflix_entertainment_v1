@@ -1,0 +1,8 @@
+.aboutContainer {
+    width: 85vw;
+    background-color: orangered;
+    margin-top: 25vh;
+    height: 55vh;
+    justify-content: center;
+    margin: 25vh auto auto;
+}

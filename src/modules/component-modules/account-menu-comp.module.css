@@ -1,0 +1,6 @@
+
+.linkStyles:link,
+.linkStyles:hover {
+    text-decoration: none;
+    color: white;
+}

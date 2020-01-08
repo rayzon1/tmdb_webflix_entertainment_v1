@@ -3,8 +3,6 @@ import styles from "../modules/component-modules/moviecontent-comp.module.css";
 import imdb_logo from "../images/icons/imdb_logo.png";
 import metacritic from "../images/icons/metacritic.png";
 import rt from "../images/icons/rt.png";
-import LoadingSpinner from "../components/LoadingSpinner";
-import { useSelector, useDispatch } from "react-redux";
 
 export default function MovieContent({
   // data, 
@@ -23,6 +21,7 @@ export default function MovieContent({
   const CreateReview = () => {
     return (
       imdbInformation &&
+      imdbInformation.Ratings !== undefined &&
       imdbInformation.Ratings.map(data => {
         if (data.Source.includes("Internet")) {
           return (
