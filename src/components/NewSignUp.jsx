@@ -6,6 +6,8 @@ import NavBar from "../components/NavBar";
 import { withRouter } from "react-router-dom";
 import TooltipMessage from "../components/TooltipMessage";
 
+const todayDate = new Date().toISOString().slice(0, 10);
+
 //TODO: CREATE CSS MODULE FOR THIS COMPONENT WITH BREAKPOINTS.
 function NewSignUp({
   setLocalUsers,
@@ -38,6 +40,7 @@ function NewSignUp({
     // Add name and email to user object.
     newUserObj.name = newName;
     newUserObj.email = newEmail;
+    newUserObj.date = todayDate;
     try {
       if (newPassword === confirmPassword) {
         newUserObj.password = newPassword;

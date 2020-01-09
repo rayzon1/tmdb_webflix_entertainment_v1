@@ -197,6 +197,7 @@ function App() {
                   toggleDrawer={toggleDrawer}
                   loggedInUser={loggedInUser}
                   setLoggedInUser={setLoggedInUser}
+                  localUser={localUser}
                 />
               )}
             />

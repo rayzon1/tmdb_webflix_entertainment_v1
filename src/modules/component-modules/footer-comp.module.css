@@ -4,20 +4,31 @@
     background-color: black;
     /* color: white; */
     position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .title {
-    position: absolute; 
+    /* position: absolute;  */
     bottom: 0; 
     margin-left: 10px; 
+    height: fit-content;
+    align-self: flex-end;
 }
 
 .image {
     width: 8vw; 
     height: 10vh; 
-    position: absolute; 
+    /* position: absolute;  */
     margin-top: 2rem; 
     right: 15px;
+}
+
+.jabba {
+    height: 1rem;
+    align-self: center;
+    height: 105px;
 }
 
 @media only screen and (max-width: 800px) {
