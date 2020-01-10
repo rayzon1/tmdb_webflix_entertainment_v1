@@ -28,6 +28,7 @@
 
 .title {
     color: red;
+    margin-bottom: 4rem;
 }
 
 .aboutContainer:nth-child(2) {

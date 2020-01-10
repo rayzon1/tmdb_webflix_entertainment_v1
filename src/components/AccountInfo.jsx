@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import SimpleMenu from "./AccountMenu";
 import styles from "../modules/component-modules/account-info-comp.module.css";
@@ -7,20 +7,31 @@ export default function AccountInfo({
   toggleDrawer,
   loggedInUser, // will only show signed in users name as string
   setLoggedInUser,
-  localUser,
+  localUser
 }) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [signedInUser, setSignedInUser] = useState(null);
 
-    // match name string (loggedInUser) with user in localStorage to access signed in users info
-    // display strings within account info page
+  // match name string (loggedInUser) with user in localStorage to access signed in users info
+  // display strings within account info page
 
-
-    // create function to isolate logged in user profile information to put in component.
-    const keys = Object.values(localUser);
-    const names = keys.map(val => JSON.parse(val).name);
-    console.log(names)
-    console.log(names.includes(loggedInUser));
-
+  useEffect(() => {
+    // will filter through localUser object values to match loggedInUser
+    // returns filtered user info object
+    const getSignedInUser = () => {
+      const values = Object.values(localUser);
+      let filtered = values.filter((val, index) => {
+        const matchedUser = JSON.parse(val).name === loggedInUser;
+        if (matchedUser) {
+          console.log(index);
+        } // grab index of matched user (put into state)
+        return matchedUser;
+      });
+      return filtered.map(val => JSON.parse(val));
+    };
+    const user = getSignedInUser();
+    setSignedInUser(...user);
+  }, [loggedInUser]);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -40,9 +51,26 @@ export default function AccountInfo({
       />
       <div className={styles.aboutContainer}>
         <h1 className={styles.title}>Account Information</h1>
-        <h3>Name: Gerardo Keys</h3>
-        <h3>Email: jotojry@icloud.com</h3>
-        <h3>Member Since: 11/11/11</h3>
+        <h3>
+          Name:{" "}
+          <span style={{ color: "red" }}>
+            {signedInUser && signedInUser.name ? signedInUser.name : "No Name"}
+          </span>
+        </h3>
+        <h3>
+          Email:{" "}
+          <span style={{ color: "red" }}>
+            {signedInUser && signedInUser.email
+              ? signedInUser.email
+              : "No Email"}
+          </span>
+        </h3>
+        <h3>
+          Member Since:{" "}
+          <span style={{ color: "red" }}>
+            {signedInUser && signedInUser.date ? signedInUser.date : "No Date"}
+          </span>
+        </h3>
       </div>
     </>
   );

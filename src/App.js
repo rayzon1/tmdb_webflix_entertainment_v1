@@ -28,7 +28,6 @@ function App() {
   // Local Storage for user signups.
   const localUser = window.localStorage;
 
-  //TODO: MOVE MENU-DRAWER FUNCTIONS TO MENU-DRAWER COMPONENT
   // State hook for menu drawers.
   const [state, setState] = React.useState({
     top: false,
@@ -37,7 +36,6 @@ function App() {
     right: false
   });
 
-  //TODO: MOVE MENU-DRAWER FUNCTIONS TO MENU-DRAWER COMPONENT
   // Toggle drawer function for the MaterialUI menu-drawer component.
   const toggleDrawer = (side, open) => event => {
     if (
