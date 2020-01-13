@@ -2,18 +2,32 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import SimpleMenu from "./AccountMenu";
 import styles from "../modules/component-modules/account-info-comp.module.css";
+import { withRouter } from "react-router-dom";
 
-export default function AccountInfo({
+function AccountInfo({
   toggleDrawer,
   loggedInUser, // will only show signed in users name as string
   setLoggedInUser,
-  localUser
+  localUser,
+  history
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [signedInUser, setSignedInUser] = useState(null);
+  const [signedInIndex, setSignedInIndex] = useState(null);
 
   // match name string (loggedInUser) with user in localStorage to access signed in users info
   // display strings within account info page
+
+  const deleteAccount = () => {
+    const currentUser = `user${signedInIndex}`;
+    const confirm = window.confirm('Are you sure you want to delete this user?')
+    if(confirm) {
+      localUser.removeItem(currentUser);
+      setLoggedInUser(null);
+      setSignedInUser(null);
+      history.push('/')
+    }
+  }
 
   useEffect(() => {
     // will filter through localUser object values to match loggedInUser
@@ -23,7 +37,7 @@ export default function AccountInfo({
       let filtered = values.filter((val, index) => {
         const matchedUser = JSON.parse(val).name === loggedInUser;
         if (matchedUser) {
-          console.log(index);
+          setSignedInIndex(index);
         } // grab index of matched user (put into state)
         return matchedUser;
       });
@@ -71,7 +85,12 @@ export default function AccountInfo({
             {signedInUser && signedInUser.date ? signedInUser.date : "No Date"}
           </span>
         </h3>
+        <button className={styles.button} onClick={() => deleteAccount()}>
+          Delete Account
+        </button>
       </div>
     </>
   );
 }
+
+export default withRouter(AccountInfo);

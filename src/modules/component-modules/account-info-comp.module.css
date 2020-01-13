@@ -34,3 +34,25 @@
 .aboutContainer:nth-child(2) {
   margin-bottom: 6rem;
 }
+
+.button {
+  width: 22rem;
+  padding: .5rem 1rem;
+  border-radius: 10rem;
+  background-color: orangered;
+  margin: 6rem auto 0 auto;
+  color: black;
+  box-shadow: 0 1.5rem 3rem #212121;
+  font-size: 1.5rem;
+  border: none;
+  text-transform: uppercase;
+
+}
+
+.button:active {
+  box-shadow: none;
+}
+
+.button:focus {
+  outline: none;
+}

@@ -8,11 +8,13 @@ export default function Footer() {
     <div
       className={styles.paperContainer}
     >
-      <p className={styles.title}>
-        {" "}
-        &copy; Mona Lisa Productions
-      </p>
-      <img src={jabba} className={styles.jabba} alt="jabba"/>
+      <div className={styles.iconContainer}>
+        <img src={jabba} className={styles.jabba} alt="jabba"/>
+        <p className={styles.title}>
+          {" "}
+          &copy; Jabba Productions
+        </p>
+      </div>
       <img src={ticket} className={styles.image} alt="ticket"/>
     </div>
   );
