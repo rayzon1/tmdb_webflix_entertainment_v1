@@ -14,4 +14,4 @@ This SPA routes between four different pages: home, movie search, tv show search
 
 Home screen has all the main content for this page. Here it will have popular, top-rated movies and shows to preview trailers and view descriptions, ratings.
 
-![home_screen_demo_1](https://user-images.githubusercontent.com/46428013/71694295-94390b00-2d63-11ea-9277-7345ae401133.gif)
+![Home screen demo](https://user-images.githubusercontent.com/46428013/72301149-bf9cdf00-361a-11ea-810f-a30bf1362d30.gif)
