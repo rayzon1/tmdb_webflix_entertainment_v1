@@ -23,4 +23,4 @@ Home screen has all the main content for this page. Here it will have popular, t
 
 The main content will be the movies and shows showcased within the posterslider bars on the home page. The goal for this component was to create unique content using the tmdb api for top-rated and popular categories and showcase these using a pure CSS made Netflix style content bar. Each movie or tv-show selected will drop down showing information including review scores from imdb, rt, and MetaCritic.
 
-![posterslider_demo_looped_1](https://user-images.githubusercontent.com/46428013/72303269-83b94800-3621-11ea-89ac-16b75c4414e5.gif)
+![posterslider_demo_looped_1](https://user-images.githubusercontent.com/46428013/72303483-4f925700-3622-11ea-865e-3965f2a1f003.gif)
