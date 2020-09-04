@@ -11,7 +11,7 @@
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",
     "material-ui": "^0.20.2",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "react": "^16.11.0",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-css-modules": "^4.7.11",
