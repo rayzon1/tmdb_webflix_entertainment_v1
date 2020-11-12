@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import styles from '../modules/component-modules/searchbar-comp.module.css';
+// testing
 
 export default function SearchBar({ search, clear }) {
 
