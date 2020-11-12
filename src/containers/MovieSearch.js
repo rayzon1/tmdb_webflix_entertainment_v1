@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import SearchBar from "../components/SearchBar";
 import Footer from "../components/Footer";
 import Axios from "axios";
@@ -100,6 +100,13 @@ export default function MovieSearch({
       .catch(err => console.log(err.message));
   };
 
+  const searchApi = useCallback(
+    (query) => {
+      searchApiCall(query);
+    },
+    [],
+  )
+
   const getMovieIds = items => {
     let arr = items.results.map(data => {
       return data.id;
@@ -141,7 +148,7 @@ export default function MovieSearch({
     });
     return setTrailerKeys(
       youtubeVideos[imageClickIndex] === undefined
-        ? "nope"
+        ? console.log('fail')
         : youtubeVideos[imageClickIndex].key
     );
   };
@@ -166,6 +173,7 @@ export default function MovieSearch({
       setLoading(true);
       setTimeout(() => {
         searchApiCall(movieSearch);
+        // searchApi(movieSearch);
         setLoading(false);
         setClicked(false);
       }, 1000);
@@ -173,7 +181,7 @@ export default function MovieSearch({
 
     return () => console.log("movie search effect unmounted.")
 
-  }, [clicked, setClicked]);
+  }, [clicked, setClicked, movieSearch, searchApiCall]);
 
   // Clears all data when clear button is pressed.
   useEffect(() => {

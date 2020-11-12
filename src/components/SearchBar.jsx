@@ -9,7 +9,7 @@ export default function SearchBar({ search, clear }) {
         if(clear) {
             inputRef.current.value = null;
         }
-    }, [clear])
+    }, [clear, inputRef])
 
 
     return (

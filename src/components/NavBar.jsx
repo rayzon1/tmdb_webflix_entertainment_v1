@@ -25,7 +25,7 @@ function ButtonAppBar({ toggleDrawer, history, loggedInUser, handleClick, setLog
       loggedInUser.length > 0 &&
       window.screen.width > 800 &&
       setElWidth(loginRef.current.offsetWidth);
-      return () => console.log('user logged in')
+      return () => null
   }, [loggedInUser]);
   
 

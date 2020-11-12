@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "../modules/container-modules/home-container.module.css";
 import MovieContent from "../components/MovieContent";
 import { useSelector, useDispatch } from "react-redux";
@@ -200,31 +200,42 @@ export default function Home({
     return state[cat].index || state[cat].clicked;
   };
 
+  // check state variables for movie effects.
+  const topRatedState = checkState("topRated", 0, clickPosterState);
+  const popularState = checkState("popular", 1, clickPosterState);
+  const nowPlayingState = checkState("nowPlaying", 2, clickPosterState);
+
+  // check state variables for tv show effects.
+  const topRatedTvState = checkState("topRated", 0, tvClickPosterState);
+  const popularTvState = checkState("popular", 1, tvClickPosterState);
+  const nowPlayingTvState = checkState("airing", 2, tvClickPosterState);
+
+
   // Gather MOVIE details
   useEffect(() => {
     mapCreateContentDetails(arr[0].index, arr[0].category);
-  }, [checkState("topRated", 0, clickPosterState)]);
+  }, [topRatedState]);
 
   useEffect(() => {
     mapCreateContentDetails(arr[1].index, arr[1].category);
-  }, [checkState("popular", 1, clickPosterState)]);
+  }, [popularState]);
 
   useEffect(() => {
     mapCreateContentDetails(arr[2].index, arr[2].category);
-  }, [checkState("nowPlaying", 2, clickPosterState)]);
+  }, [nowPlayingState]);
 
   // Gather TV details
   useEffect(() => {
     mapTvCreateContentDetails(arr2[0].index, arr2[0].category);
-  }, [checkState("topRated", 0, tvClickPosterState)]);
+  }, [topRatedTvState]);
 
   useEffect(() => {
     mapTvCreateContentDetails(arr2[1].index, arr2[1].category);
-  }, [checkState("popular", 1, tvClickPosterState)]);
+  }, [popularTvState]);
 
   useEffect(() => {
     mapTvCreateContentDetails(arr2[2].index, arr2[2].category);
-  }, [checkState("airing", 2, tvClickPosterState)]);
+  }, [nowPlayingTvState]);
 
   // Gather Movie/Entertainment news.
   useEffect(() => {
