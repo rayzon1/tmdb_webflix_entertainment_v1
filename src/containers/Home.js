@@ -279,7 +279,7 @@ export default function Home({
       <div style={{ display: "flex", flexDirection: "column" }}>
         <h1 className={styles.mainTitle}>Trending Entertainment News</h1>
         {Object.keys(movieNews).length > 0 ? (
-          <CarouselHead mediaNews={movieNews.movieNews.data} />
+          <CarouselHead mediaNews={movieNews.movieNews} />
         ) : (
           <LoadingSpinner />
         )}
